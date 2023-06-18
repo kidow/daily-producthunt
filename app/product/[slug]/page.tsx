@@ -1,3 +1,3 @@
 export default function Page() {
-  return <div>HomePage</div>
+  return <div>Hompr ePage</div>
 }
