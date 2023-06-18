@@ -1,0 +1,3 @@
+interface ReactProps {
+  children: ReactNode
+}
