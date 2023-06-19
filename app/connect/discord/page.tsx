@@ -57,11 +57,11 @@ export default function Page() {
           >
             <input
               value={url}
-              name="url"
               onChange={(e) => setUrl(e.target.value)}
               type="url"
               required
               className="w-96 bg-transparent px-3 py-2 focus:outline-none"
+              autoFocus
             />
             <button className="bg-primary px-3 py-2" disabled={isLoading}>
               {isLoading ? '등록 중...' : '등록'}

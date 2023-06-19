@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     body: JSON.stringify({
       grant_type: 'authorization_code',
       code: url.searchParams.get('code') as string,
-      redirect_uri: 'https://dp.kidow.me/api/notion/redirect'
+      redirect_uri: 'https://dp.kidow.me/api/redirect/notion'
     })
   })
 
