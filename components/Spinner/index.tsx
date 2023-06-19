@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import type { FC } from 'react'
 import classnames from 'classnames'
 import type { Argument } from 'classnames'
@@ -34,4 +35,4 @@ const Spinner: FC<Props> = ({ className }) => {
   )
 }
 
-export default Spinner
+export default memo(Spinner)

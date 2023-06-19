@@ -43,7 +43,7 @@ const Input: FC<Props> = ({
       autoFocus={autoFocus}
       required={required}
       className={classnames(
-        'rounded border border-neutral-700 bg-transparent px-3 py-2 ring-primary duration-150 focus:outline-none focus:ring',
+        'rounded border border-neutral-700 bg-transparent px-3 py-2 ring-primary duration-150 focus:outline-none focus:ring disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-400',
         className
       )}
     />

@@ -4,7 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Input } from 'components'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { backdrop, toast } from 'services'
 
 export default function Page() {
@@ -13,11 +13,12 @@ export default function Page() {
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false)
   const supabase = createClientComponentClient<Database>()
   const { push } = useRouter()
+  const searchParams = useSearchParams()
 
   const onLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (email !== process.env.ADMIN_EMAIL) return
+    if (email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) return
     backdrop(true)
     if (isOtpSent) {
       const { error } = await supabase.auth.verifyOtp({
@@ -31,7 +32,8 @@ export default function Page() {
         console.error(error)
         return
       }
-      push('/dashboard')
+      const redirectUrl = searchParams.get('redirectUrl')
+      push(redirectUrl || '/dashboard')
     } else {
       const { error } = await supabase.auth.signInWithOtp({ email })
       backdrop(false)
@@ -55,13 +57,16 @@ export default function Page() {
             className="block w-full"
             placeholder="이메일"
             autoFocus
+            disabled={isOtpSent}
           />
-          <Input
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="block w-full"
-            placeholder="6자리 코드"
-          />
+          {isOtpSent && (
+            <Input
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              className="block w-full"
+              placeholder="6자리 코드"
+            />
+          )}
           <button className="block w-full rounded bg-primary px-3 py-2">
             로그인
           </button>
