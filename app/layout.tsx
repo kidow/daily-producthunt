@@ -1,3 +1,4 @@
+import { Backdrop, Toast } from 'containers'
 import './globals.css'
 
 export interface Props extends ReactProps {}
@@ -10,7 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Backdrop />
+        <Toast />
+      </body>
     </html>
   )
 }

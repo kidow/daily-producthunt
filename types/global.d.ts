@@ -4,7 +4,7 @@ declare namespace NodeJS {
   }
   interface ProcessEnv {
     NODE_ENV: string
-    BASE_URL: string
+    ADMIN_EMAIL: string
     SLACK_TOKEN: string
     SLACK_CLIENT_ID: string
     SLACK_CLIENT_SECRET: string
