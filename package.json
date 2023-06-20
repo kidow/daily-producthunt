@@ -18,11 +18,11 @@
     "dayjs": "^1.11.8",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.6",
+    "fuse.js": "^6.6.2",
     "next": "13.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.45.0-next.1",
-    "slack-block-builder": "^2.7.2"
+    "react-hook-form": "^7.45.0-next.1"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

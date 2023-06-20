@@ -66,7 +66,7 @@ export default function Page() {
           />
           {isOtpSent && (
             <input
-              className="block w-full"
+              className="tw-input block w-full"
               placeholder="6자리 코드"
               {...register('code')}
             />

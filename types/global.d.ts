@@ -14,5 +14,8 @@ declare namespace NodeJS {
     NEXT_PUBLIC_NOTION_CLIENT_ID: string
     NEXT_PUBLIC_NOTION_CLIENT_SECRET: string
     NEXT_PUBLIC_NOTION_DATABASE_ID: string
+
+    NEXT_PUBLIC_SUPABASE_URL: string
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: string
   }
 }
