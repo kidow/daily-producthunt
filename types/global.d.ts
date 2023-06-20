@@ -17,5 +17,8 @@ declare namespace NodeJS {
 
     NEXT_PUBLIC_SUPABASE_URL: string
     NEXT_PUBLIC_SUPABASE_ANON_KEY: string
+
+    NEXT_PUBLIC_TISTORY_APP_ID: string
+    NEXT_PUBLIC_TISTORY_SECRET_KEY: string
   }
 }
