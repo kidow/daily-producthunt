@@ -15,11 +15,14 @@
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@vercel/og": "^0.5.7",
     "classnames": "^2.3.2",
+    "dayjs": "^1.11.8",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.6",
     "next": "13.4.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.0-next.1",
+    "slack-block-builder": "^2.7.2"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     headers: new Headers({
       'Content-Type': 'application/json',
       Authorization: `Basic ${btoa(
-        `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_CLIENT_SECRET}`
+        `${process.env.NEXT_PUBLIC_NOTION_CLIENT_ID}:${process.env.NEXT_PUBLIC_NOTION_CLIENT_SECRET}`
       )}`
     }),
     body: JSON.stringify({

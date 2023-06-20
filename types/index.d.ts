@@ -76,6 +76,61 @@ interface Database {
           discord_webhook_url?: string | null
         }
       }
+      reserves: {
+        Row: {
+          id: number
+          url: string
+          icon_url: string
+          cover_url: string
+          name: string
+          title: string
+          intro: string
+          core: string
+          platform: string
+          pricing: string
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          url?: string
+          icon_url?: string
+          cover_url?: string
+          name?: string
+          title?: string
+          intro?: string
+          core?: string
+          platform?: string
+          pricing?: string
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          url?: string
+          icon_url?: string
+          cover_url?: string
+          name?: string
+          title?: string
+          intro?: string
+          core?: string
+          platform?: string
+          pricing?: string
+          created_at?: string
+        }
+      }
+      tags: {
+        Row: {
+          id: number
+          name: string
+        }
+        Insert: {
+          id?: number
+          name?: string
+        }
+        Update: {
+          id?: number
+          name?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

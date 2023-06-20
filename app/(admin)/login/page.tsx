@@ -1,23 +1,29 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Input } from 'components'
 import { useState } from 'react'
-import type { FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { backdrop, toast } from 'services'
+import { useForm } from 'react-hook-form'
+
+interface State {
+  email: string
+  code: string
+}
 
 export default function Page() {
-  const [email, setEmail] = useState<string>('')
-  const [code, setCode] = useState<string>('')
+  const { register, handleSubmit } = useForm<State>({
+    defaultValues: {
+      email: '',
+      code: ''
+    }
+  })
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false)
   const supabase = createClientComponentClient<Database>()
   const { push } = useRouter()
   const searchParams = useSearchParams()
 
-  const onLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onLogin = async ({ email, code }: State) => {
     if (email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) return
     backdrop(true)
     if (isOtpSent) {
@@ -48,23 +54,21 @@ export default function Page() {
   return (
     <div className="container mx-auto">
       <div className="flex h-screen items-center justify-center">
-        <form onSubmit={onLogin} className="w-80 space-y-4">
-          <Input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+        <form onSubmit={handleSubmit(onLogin)} className="w-80 space-y-4">
+          <input
             type="email"
             required
-            className="block w-full"
+            className="tw-input block w-full"
             placeholder="이메일"
             autoFocus
             disabled={isOtpSent}
+            {...register('email', { required: true })}
           />
           {isOtpSent && (
-            <Input
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+            <input
               className="block w-full"
               placeholder="6자리 코드"
+              {...register('code')}
             />
           )}
           <button className="block w-full rounded bg-primary px-3 py-2">

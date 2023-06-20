@@ -8,3 +8,36 @@
     @apply bg-neutral-900 text-neutral-50;
   }
 }
+
+@layer components {
+  .tw-table th,
+  .tw-table td {
+    @apply border dark:border-neutral-700;
+  }
+  .tw-table tr {
+    @apply border-b last:border-b-0;
+  }
+  .tw-table th:first-child input[type='checkbox'],
+  .tw-table td:first-child input[type='checkbox'] {
+    @apply h-5 w-5 cursor-pointer align-middle disabled:cursor-not-allowed;
+  }
+  .tw-table-lg th,
+  .tw-table-lg td {
+    @apply px-6 py-3;
+  }
+  .tw-table-md th,
+  .tw-table-md td {
+    @apply px-4 py-2;
+  }
+  .tw-table-sm th,
+  .tw-table-sm td {
+    @apply px-2 py-1;
+  }
+  .tw-table-xs th,
+  .tw-table-xs td {
+    @apply px-1 py-0.5;
+  }
+  .tw-input {
+    @apply rounded border border-neutral-700 bg-transparent px-3 py-2 ring-primary duration-150 focus:outline-none focus:ring disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-400;
+  }
+}
