@@ -78,6 +78,12 @@ export async function POST(req: Request) {
                   url: data.icon_url
                 }
               },
+              cover: {
+                type: 'external',
+                external: {
+                  url: data.cover_url
+                }
+              },
               properties: {
                 이름: {
                   title: [
@@ -139,9 +145,7 @@ export async function POST(req: Request) {
                 avatar_url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/publics/daily-producthunt.png`,
                 embeds: [
                   {
-                    description: `- ${data.intro}\n- ${data.core}\n- ${
-                      data.platform
-                    }\n- ${data.pricing}\n${data.tags.join(', ')}`,
+                    description: `- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`,
                     image: {
                       url: data.cover_url
                     },
@@ -154,13 +158,60 @@ export async function POST(req: Request) {
                 ]
               })
             })
+          }),
+        fetch('https://www.tistory.com/apis/post/write', {
+          method: 'POST',
+          headers: new Headers({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({
+            access_token: process.env.NEXT_PUBLIC_TISTORY_ACCESS_TOKEN,
+            output: 'json',
+            blogName: 'wcgo2ling',
+            title: `${data.name} - ${data.title}`,
+            category: 1113722,
+            visibility: 3,
+            tag: data.tags.join(','),
+            content: `<p><figure class='imageblock alignCenter' data-origin-width='1304' data-origin-height='750' data-ke-mobilestyle='alignCenter'><span data-url='${
+              data.cover_url
+            }' data-lightbox='lightbox' data-alt=''><img src='${
+              data.cover_url
+            }' srcset='${data.cover_url}' data-filename='${
+              data.name
+            }.png' data-ke-mobilestyle='alignCenter'/></span></figure></p>\n<ul style=\"list-style-type: disc;\" data-ke-list-type=\"disc\">\n<li>${
+              data.intro
+            }</li>\n<li>${data.core}</li>\n<li>${data.platform}</li>\n<li>${
+              data.pricing
+            }</li>\n</ul>\n<figure id=\"og_1687252633313\" contenteditable=\"false\" data-ke-type=\"opengraph\" data-ke-align=\"alignCenter\" data-og-type=\"website\" data-og-title=\"${
+              data.name
+            } - ${data.title}\" data-og-description=\"${
+              data.intro
+            }\" data-og-host=\"${
+              new URL(data.url).origin
+            }\" data-og-source-url=\"${data.url}\" data-og-url=\"${
+              data.url
+            }\" data-og-image=\"${data.icon_url}\"><a href=\"${
+              data.url
+            }\" target=\"_blank\" rel=\"noopener\" data-source-url=\"${
+              data.url
+            }\">\n<div class=\"og-image\" style=\"background-image: url('${
+              data.icon_url
+            }');\">&nbsp;</div>\n<div class=\"og-text\">\n<p class=\"og-title\" data-ke-size=\"size16\">${
+              data.name
+            } - ${
+              data.title
+            }</p>\n<p class=\"og-desc\" data-ke-size=\"size16\">${
+              data.intro
+            }</p>\n<p class=\"og-host\" data-ke-size=\"size16\">${
+              new URL(data.url).host
+            }</p>\n</div>\n</a></figure>\n<figure id=\"og_1687252745800\" contenteditable=\"false\" data-ke-type=\"opengraph\" data-ke-align=\"alignCenter\" data-og-type=\"website\" data-og-title=\"일간 ProductHunt\" data-og-description=\"일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커\" data-og-host=\"slashpage.com\" data-og-source-url=\"https://slashpage.com/daily-producthunt\" data-og-url=\"https://slashpage.com/daily-producthunt\" data-og-image=\"https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512\"><a href=\"https://slashpage.com/daily-producthunt\" target=\"_blank\" rel=\"noopener\" data-source-url=\"https://slashpage.com/daily-producthunt\">\n<div class=\"og-image\" style=\"background-image: url('https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512');\">&nbsp;</div>\n<div class=\"og-text\">\n<p class=\"og-title\" data-ke-size=\"size16\">일간 ProductHunt</p>\n<p class=\"og-desc\" data-ke-size=\"size16\">일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커</p>\n<p class=\"og-host\" data-ke-size=\"size16\">slashpage.com</p>\n</div>\n</a></figure>`
           })
+        })
       ])
       return NextResponse.json({ success: true, data: result })
     }
 
     return NextResponse.json({ success: false, data: [] })
   } catch (err) {
+    console.log(err)
     return NextResponse.json({
       success: false,
       data: err,
