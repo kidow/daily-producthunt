@@ -13,7 +13,9 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko">
       <body>
-        {children}
+        <header>header</header>
+        <main>{children}</main>
+        <footer>footer</footer>
         <Backdrop />
         <Toast />
       </body>

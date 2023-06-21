@@ -7,11 +7,11 @@ import { useEffect } from 'react'
 export default function Page() {
   const { replace } = useRouter()
   const searchParams = useSearchParams()
-  const url = searchParams.get('url')
+  const id = searchParams.get('id')
 
   useEffect(() => {
-    if (url) {
-      replace(url + '/?utm_source=daily_productunht')
+    if (id) {
+      replace(`/products/${id}` + '?utm_source=daily_producthunt')
     }
   }, [])
   return <>링크 이동 중...</>

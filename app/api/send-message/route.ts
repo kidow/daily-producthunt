@@ -6,6 +6,7 @@ import { Client } from '@notionhq/client'
 
 export async function POST(req: Request) {
   const { id } = await req.json()
+  const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY })
   const supabase = createRouteHandlerClient<Database>({ cookies })
 
   const [{ data }, { data: users }] = await Promise.all([
@@ -19,6 +20,72 @@ export async function POST(req: Request) {
 
   try {
     if (users) {
+      const page = await notion.pages.create({
+        parent: {
+          type: 'database_id',
+          database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID
+        },
+        icon: {
+          type: 'external',
+          external: {
+            url: data.icon_url
+          }
+        },
+        cover: {
+          type: 'external',
+          external: {
+            url: data.cover_url
+          }
+        },
+        properties: {
+          이름: {
+            title: [
+              {
+                text: { content: data.name },
+                annotations: { bold: true }
+              }
+            ]
+          },
+          타이틀: {
+            rich_text: [
+              {
+                text: { content: data.title },
+                annotations: { bold: true }
+              }
+            ]
+          },
+          태그: {
+            multi_select: data.tags.map((text) => ({ name: text }))
+          },
+          URL: {
+            url: data.url
+          },
+          '한 줄 소개': {
+            rich_text: [{ text: { content: data.intro } }]
+          },
+          '핵심 기능': {
+            rich_text: [{ text: { content: data.core } }]
+          },
+          '지원 플랫폼': {
+            rich_text: [{ text: { content: data.platform } }]
+          },
+          '가격 정책': {
+            rich_text: [{ text: { content: data.pricing } }]
+          }
+        },
+        children: [
+          {
+            object: 'block',
+            type: 'image',
+            image: {
+              type: 'external',
+              external: {
+                url: data.cover_url
+              }
+            }
+          }
+        ]
+      })
       const result = await Promise.all([
         ...users
           .filter((item) => !!item.slack_token && !!item.slack_channel_id)
@@ -32,7 +99,7 @@ export async function POST(req: Request) {
                   type: 'section',
                   text: {
                     type: 'mrkdwn',
-                    text: `*<https://dp.kidow.me/l?url=${data.url}|${data.name} - ${data.title}>*`
+                    text: `*<https://dp.kidow.me/l?id=${page.id}|${data.name} - ${data.title}>*`
                   }
                 },
                 {
@@ -152,7 +219,7 @@ export async function POST(req: Request) {
                       url: data.icon_url
                     },
                     title: `${data.name} - ${data.title}`,
-                    url: `https://dp.kidow.me/l?url=${data.url}`
+                    url: `https://dp.kidow.me/l?id=${page.id}`
                   }
                 ]
               })
