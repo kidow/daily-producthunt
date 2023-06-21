@@ -1,6 +1,7 @@
 import { Backdrop, Toast } from 'containers'
 import './globals.css'
 import 'dayjs/locale/ko'
+import Link from 'next/link'
 
 export interface Props extends ReactProps {}
 
@@ -13,9 +14,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko">
       <body>
-        <header>header</header>
-        <main>{children}</main>
-        <footer>footer</footer>
+        {children}
         <Backdrop />
         <Toast />
       </body>

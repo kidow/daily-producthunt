@@ -1,6 +1,7 @@
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { Client } from '@notionhq/client'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY })
 
@@ -78,7 +79,7 @@ export default async function Page({ params }: Props) {
     page_id: params.id
   })) as any
   if (!page) {
-    redirect('/products')
+    redirect('/')
   }
   const url = page.properties['URL'].url
   const name = page.properties['이름'].title[0].text.content
@@ -92,7 +93,41 @@ export default async function Page({ params }: Props) {
   const tags = page.properties.태그.multi_select
   return (
     <div className="mx-auto max-w-4xl px-4">
-      <div className="mt-10"></div>
+      <img src={coverUrl} alt="cover image" className="mb-4 rounded md:mb-10" />
+      <div className="flex gap-4 md:m-10 md:gap-5">
+        <img
+          src={iconUrl}
+          alt="logo"
+          className="h-12 w-12 rounded md:h-20 md:w-20"
+        />
+        <div className="space-y-2">
+          <h1>
+            <Link
+              href={url + '/?utm_source=daily_producthunt'}
+              className="text-2xl font-semibold text-blue-500 hover:underline"
+            >
+              {name}
+            </Link>
+          </h1>
+          <p className="text-lg">{title}</p>
+          <ul className="list-inside list-disc text-neutral-200">
+            <li>{intro}</li>
+            <li>{core}</li>
+            <li>{platform}</li>
+            <li>{pricing}</li>
+          </ul>
+          <ul className="flex flex-wrap gap-4 pt-2">
+            {tags.map((item: any, key: number) => (
+              <li
+                key={key}
+                className="rounded-full border border-neutral-700 bg-opacity-70 px-1.5 py-0.5 text-sm"
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }
