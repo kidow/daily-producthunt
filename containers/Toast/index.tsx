@@ -45,7 +45,7 @@ const Toast: FC<Props> = () => {
             onClick={() =>
               setList((list) => [...list.slice(0, key), ...list.slice(key + 1)])
             }
-            className="animate-toast-open relative w-80 cursor-pointer select-none rounded-lg border border-neutral-700 bg-neutral-800 p-4"
+            className="relative w-80 animate-toast-open cursor-pointer select-none rounded-lg border border-neutral-700 bg-neutral-800 p-4"
             role="alert"
           >
             <button className="absolute right-2 top-2">
@@ -53,7 +53,7 @@ const Toast: FC<Props> = () => {
             </button>
             <div className="flex items-start gap-3">
               {item.type === 'success' && (
-                <CheckCircleIcon className="h-6 w-6 text-primary" />
+                <CheckCircleIcon className="h-6 w-6 text-emerald-500" />
               )}
               {item.type === 'info' && (
                 <InformationCircleIcon className="h-6 w-6 text-sky-500" />

@@ -3,7 +3,6 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { WebClient } from '@slack/web-api'
 import { Client } from '@notionhq/client'
-import { request } from 'services'
 
 export async function POST(req: Request) {
   const { id } = await req.json()
@@ -137,7 +136,7 @@ export async function POST(req: Request) {
         ...users
           .filter((item) => !!item.discord_webhook_url)
           .map((item) => {
-            return request(item.discord_webhook_url!, {
+            return fetch(item.discord_webhook_url!, {
               method: 'POST',
               headers: new Headers({ 'Content-Type': 'application/json' }),
               body: JSON.stringify({
@@ -206,12 +205,13 @@ export async function POST(req: Request) {
           })
         })
       ])
+      console.log('result', result)
       return NextResponse.json({ success: true, data: result })
     }
 
     return NextResponse.json({ success: false, data: [] })
   } catch (err) {
-    console.log(err)
+    console.log('err', err)
     return NextResponse.json({
       success: false,
       data: err,
