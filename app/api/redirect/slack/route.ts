@@ -18,8 +18,16 @@ export async function GET(req: Request) {
     token: authed_user?.access_token
   })
   const { channels } = await bot.conversations.list({ types: 'im' })
-  console.log('channels', channels)
   const channelId = channels?.find((item) => item.user === authed_user?.id)?.id
+  if (!channelId) {
+    console.log('user', authed_user)
+    console.log('channels', channels)
+    NextResponse.json({
+      success: false,
+      message:
+        '슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.'
+    })
+  }
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
   const { data } = await supabase
