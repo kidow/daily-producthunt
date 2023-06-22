@@ -104,6 +104,7 @@ export default async function Page({ params }: Props) {
           <h1>
             <Link
               href={url + '/?utm_source=daily_producthunt'}
+              target="_blank"
               className="text-2xl font-semibold text-blue-500 hover:underline"
             >
               {name}
