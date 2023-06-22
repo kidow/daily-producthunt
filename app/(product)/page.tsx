@@ -2,6 +2,8 @@ import { Client } from '@notionhq/client'
 import Link from 'next/link'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { Products } from 'templates'
+import { Product } from 'components'
 
 dayjs.extend(relativeTime)
 
@@ -12,47 +14,31 @@ const notion = new Client({
 })
 
 export default async function Page() {
-  const data = await notion.databases.query({
+  const { results, next_cursor, has_more } = await notion.databases.query({
     database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID,
     sorts: [{ property: '생성 일시', direction: 'descending' }],
     page_size: 20
   })
-  const results = data.results as any[]
+  const list = results as any[]
   return (
     <div className="mx-auto max-w-4xl px-4">
       <ul className="space-y-6">
-        {results.map((item, key) => (
-          <li key={key}>
-            <Link className="flex gap-4" href={`/product/${item.id}`}>
-              <img
-                src={item.icon.external.url}
-                alt="logo"
-                className="h-12 w-12 rounded md:h-20 md:w-20"
-              />
-              <div className="space-y-0.5 md:space-y-1">
-                <h3 className="text-lg font-semibold">
-                  {item.properties['이름'].title[0].text.content}
-                </h3>
-                <p className="break-keep text-neutral-400">
-                  {item.properties['타이틀'].rich_text[0].text.content}
-                </p>
-                <ul className="flex items-center gap-2 pt-1">
-                  {item.properties.태그.multi_select.map((tag: any) => (
-                    <li
-                      key={tag.id}
-                      className="rounded-full border border-neutral-700 px-1.5 py-0.5 text-xs text-neutral-400"
-                    >
-                      {tag.name}
-                    </li>
-                  ))}
-                  <li className="text-xs text-neutral-500">
-                    {dayjs(item.created_time).locale('ko').fromNow()}
-                  </li>
-                </ul>
-              </div>
-            </Link>
-          </li>
+        {list.map((item) => (
+          <Product
+            key={item.id}
+            id={item.id}
+            iconUrl={item.icon.external.url}
+            name={item.properties['이름'].title[0].text.content}
+            title={item.properties['타이틀'].rich_text[0].text.content}
+            tags={item.properties.태그.multi_select}
+            createdAt={item.created_time}
+          />
         ))}
+        <Products
+          length={list.length}
+          nextCursor={next_cursor}
+          hasMore={has_more}
+        />
       </ul>
     </div>
   )

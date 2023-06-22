@@ -2,10 +2,11 @@ import { Backdrop, Toast } from 'containers'
 import './globals.css'
 import 'dayjs/locale/ko'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
 export interface Props extends ReactProps {}
 
-export const metadata = {
+export const metadata: Metadata = {
   title: '일간 ProductHunt',
   description: '매일매일 ProductHunt 상위 5개 제품을 소개합니다.'
 }

@@ -1,7 +1,8 @@
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import { Navigation } from 'containers'
+import type { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: '대시보드'
 }
 

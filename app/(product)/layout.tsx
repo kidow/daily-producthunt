@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
+  
   title: '일간 ProductHunt'
 }
 
