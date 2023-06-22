@@ -112,12 +112,12 @@ export default async function Page({ params }: Props) {
           </h1>
           <p className="text-lg">{title}</p>
           <ul className="list-inside list-disc text-neutral-200">
-            <li>{intro}</li>
-            <li>{core}</li>
-            <li>{platform}</li>
-            <li>{pricing}</li>
+            <li className="break-keep">{intro}</li>
+            <li className="break-keep">{core}</li>
+            <li className="break-keep">{platform}</li>
+            <li className="break-keep">{pricing}</li>
           </ul>
-          <ul className="flex flex-wrap gap-4 pt-2">
+          <ul className="flex flex-wrap gap-2 pt-2">
             {tags.map((item: any, key: number) => (
               <li
                 key={key}

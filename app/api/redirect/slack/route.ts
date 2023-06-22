@@ -9,7 +9,8 @@ export async function GET(req: Request) {
   const { access_token, authed_user } = await web.oauth.v2.access({
     client_id: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID,
     client_secret: process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET,
-    code: url.searchParams.get('code') as string
+    code: url.searchParams.get('code') as string,
+    redirect_uri: 'https://daily-producthunt.kidow.me/api/redirect/slack'
   })
 
   const bot = new WebClient(access_token)
@@ -17,6 +18,7 @@ export async function GET(req: Request) {
     token: authed_user?.access_token
   })
   const { channels } = await bot.conversations.list({ types: 'im' })
+  console.log('channels', channels)
   const channelId = channels?.find((item) => item.user === authed_user?.id)?.id
 
   const supabase = createRouteHandlerClient<Database>({ cookies })

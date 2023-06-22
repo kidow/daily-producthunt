@@ -30,7 +30,7 @@ interface State {
 }
 
 export default function Page() {
-  const { register, handleSubmit, reset, watch } = useForm<State>({
+  const { register, handleSubmit, watch, setValue } = useForm<State>({
     defaultValues: {
       url: 'https://google.com',
       name: '이름',
@@ -52,27 +52,6 @@ export default function Page() {
   const [tagList, setTagList] = useState<
     Database['public']['Tables']['tags']['Row'][]
   >([])
-  const {
-    url,
-    name,
-    title,
-    iconUrl,
-    coverUrl,
-    core,
-    platform,
-    pricing,
-    intro
-  }: State = {
-    url: watch('url'),
-    name: watch('name'),
-    iconUrl: watch('iconUrl'),
-    coverUrl: watch('coverUrl'),
-    title: watch('title'),
-    intro: watch('intro'),
-    core: watch('core'),
-    platform: watch('platform'),
-    pricing: watch('pricing')
-  }
   const supabase = createClientComponentClient<Database>()
 
   const getList = async () => {
@@ -112,6 +91,8 @@ export default function Page() {
       console.error(error)
       return
     }
+    Object.keys(watch()).forEach((key: any) => setValue(key, ''))
+    setTags([''])
     getList()
   }
 
@@ -168,8 +149,8 @@ export default function Page() {
             columns={
               <tr>
                 <th>이름</th>
-                <th>아이콘</th>
-                <th>커버</th>
+                <th className="min-w-[90px]">아이콘</th>
+                <th className="min-w-[180px]">커버</th>
                 <th>액션</th>
                 <th>태그</th>
                 <th>타이틀</th>
@@ -236,27 +217,27 @@ export default function Page() {
         <Card title="템플릿">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <Preview.Slack
-              title={title}
-              core={core}
-              url={url}
-              platform={platform}
-              pricing={pricing}
-              name={name}
-              intro={intro}
-              iconUrl={iconUrl}
-              coverUrl={coverUrl}
+              title={watch('title')}
+              core={watch('core')}
+              url={watch('url')}
+              platform={watch('platform')}
+              pricing={watch('pricing')}
+              name={watch('name')}
+              intro={watch('intro')}
+              iconUrl={watch('iconUrl')}
+              coverUrl={watch('coverUrl')}
               tags={tags}
             />
             <Preview.Discord
-              title={title}
-              core={core}
-              url={url}
-              platform={platform}
-              pricing={pricing}
-              name={name}
-              intro={intro}
-              iconUrl={iconUrl}
-              coverUrl={coverUrl}
+              title={watch('title')}
+              core={watch('core')}
+              url={watch('url')}
+              platform={watch('platform')}
+              pricing={watch('pricing')}
+              name={watch('name')}
+              intro={watch('intro')}
+              iconUrl={watch('iconUrl')}
+              coverUrl={watch('coverUrl')}
               tags={tags}
             />
           </div>
@@ -368,19 +349,19 @@ export default function Page() {
               <Button
                 text="예약"
                 disabled={
-                  !isURL(url) ||
-                  !name ||
-                  !iconUrl ||
-                  !coverUrl ||
-                  !title ||
-                  !intro ||
-                  !core ||
-                  !platform ||
-                  !pricing ||
+                  !isURL(watch('url')) ||
+                  Object.values(watch()).some((value) => !value) ||
                   tags.some((v) => !v)
                 }
               />
-              <Button type="button" text="비우기" onClick={() => reset()} />
+              <Button
+                type="button"
+                text="비우기"
+                onClick={() => {
+                  Object.keys(watch()).forEach((key: any) => setValue(key, ''))
+                  setTags([''])
+                }}
+              />
             </div>
           </form>
         </Card>
