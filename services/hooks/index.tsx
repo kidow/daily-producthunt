@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo, useRef, useState, useEffect } from 'react'
 import type { RefObject } from 'react'
 
