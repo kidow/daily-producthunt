@@ -23,7 +23,7 @@ export default async function Page() {
       <ul className="space-y-6">
         {results.map((item, key) => (
           <li key={key}>
-            <Link className="flex gap-4" href={`/products/${item.id}`}>
+            <Link className="flex gap-4" href={`/product/${item.id}`}>
               <img
                 src={item.icon.external.url}
                 alt="logo"
