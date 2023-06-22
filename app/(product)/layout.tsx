@@ -1,10 +1,4 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  
-  title: '일간 ProductHunt'
-}
 
 export default function RootLayout({ children }: ReactProps) {
   return (
@@ -29,7 +23,7 @@ export default function RootLayout({ children }: ReactProps) {
             </li>
             <li>
               <Link
-                href="https://slashpage.com/daily-producthunt/g36nj8v2wkjz825ykq9z"
+                href="https://slashpage.com/daily-producthunt/zywk9j72981dkmgpqvnd"
                 target="_blank"
                 className="hover:underline"
               >

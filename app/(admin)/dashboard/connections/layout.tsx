@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '연결된 유저'
+  title: '연결된 유저',
+  robots: 'noindex, nofollow'
 }
 
 export default function Layout({ children }: ReactProps) {

@@ -19,7 +19,7 @@ interface State {}
 const Product: FC<Props> = ({ id, iconUrl, name, title, tags, createdAt }) => {
   return (
     <li>
-      <Link className="flex gap-4" href={`/product/${id}`} target="_blank">
+      <Link className="flex gap-4" href={`/product/${id}`}>
         <img
           src={iconUrl}
           alt="logo"
