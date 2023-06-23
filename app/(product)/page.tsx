@@ -9,7 +9,7 @@ dayjs.extend(relativeTime)
 const notion = new Client({
   auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
   fetch: (url, init) =>
-    fetch(url, { ...init, next: { revalidate: 60 * 60 * 24 }, cache: 'no-store' })
+    fetch(url, { ...init, next: { revalidate: 0 }, cache: 'no-store' })
 })
 
 export default async function Page() {
