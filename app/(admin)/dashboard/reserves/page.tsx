@@ -112,21 +112,26 @@ export default function Page() {
   const sendMessage = async (id: number) => {
     if (!window.confirm('전송하시겠습니까?')) return
     backdrop(true)
-    const { success, message, data } = await request<{
-      success: true
-      message?: string
-      data: any
-    }>('/api/send-message', {
-      method: 'POST',
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({ id })
-    })
-    console.log('data', data)
-    backdrop(false)
-    if (success) {
-      toast.success('전송되었습니다.')
-    } else {
-      toast.error(message || '실패했습니다.')
+    try {
+      const { success, message, data } = await request<{
+        success: true
+        message?: string
+        data: any
+      }>('/api/send-message', {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ id })
+      })
+      console.log('data', data)
+      if (success) {
+        toast.success('전송되었습니다.')
+      } else {
+        toast.error(message || '실패했습니다.')
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      backdrop(false)
     }
   }
 
