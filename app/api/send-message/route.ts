@@ -3,6 +3,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { WebClient } from '@slack/web-api'
 import { Client } from '@notionhq/client'
+import TelegramBot from 'node-telegram-bot-api'
 
 export async function POST(req: Request) {
   const { id } = await req.json()
@@ -224,6 +225,18 @@ export async function POST(req: Request) {
                 ]
               })
             })
+          }),
+        ...users
+          .filter((item) => !!item.telegram_chatting_id)
+          .map((item) => {
+            const bot = new TelegramBot(
+              process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN
+            )
+            return bot.sendMessage(
+              item.telegram_chatting_id!,
+              `**[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${data.id})**\n- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`,
+              { parse_mode: 'Markdown' }
+            )
           }),
         fetch('https://www.tistory.com/apis/post/write', {
           method: 'POST',

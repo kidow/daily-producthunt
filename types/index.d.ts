@@ -84,6 +84,7 @@ interface Database {
           notion_token: string | null
           notion_database_id: string | null
           discord_webhook_url: string | null
+          telegram_chatting_id: number | null
         }
         Insert: {
           id?: number
@@ -94,6 +95,7 @@ interface Database {
           notion_token?: string | null
           notion_database_id?: string | null
           discord_webhook_url?: string | null
+          telegram_chatting_id?: number | null
         }
         Update: {
           id?: number
@@ -104,6 +106,7 @@ interface Database {
           notion_token?: string | null
           notion_database_id?: string | null
           discord_webhook_url?: string | null
+          telegram_chatting_id?: number | null
         }
       }
       reserves: {
