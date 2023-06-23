@@ -1,5 +1,4 @@
 import { Client } from '@notionhq/client'
-import Link from 'next/link'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Products } from 'templates'
@@ -10,7 +9,7 @@ dayjs.extend(relativeTime)
 const notion = new Client({
   auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY,
   fetch: (url, init) =>
-    fetch(url, { ...init, next: { revalidate: 60 * 60 * 24 } })
+    fetch(url, { ...init, next: { revalidate: 60 * 60 * 24 }, cache: 'no-store' })
 })
 
 export default async function Page() {

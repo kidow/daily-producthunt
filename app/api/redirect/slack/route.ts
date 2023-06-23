@@ -48,6 +48,11 @@ export async function GET(req: Request) {
     })
   }
 
+  await bot.chat.postMessage({
+    channel: channelId!,
+    text: '통합이 완료되었습니다.'
+  })
+
   return NextResponse.json({
     success: true,
     message: '통합이 완료되었습니다. 이 창을 닫아주세요.'
