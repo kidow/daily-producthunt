@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Products } from 'templates'
 import { Product } from 'components'
+import Link from 'next/link'
 
 dayjs.extend(relativeTime)
 
@@ -21,6 +22,15 @@ export default async function Page() {
   const list = results as any[]
   return (
     <div className="mx-auto max-w-4xl px-4">
+      <div className="mb-4">
+        <Link
+          href="https://kidow.notion.site/93dbf7ddc40640ab98675faf728e28b5?v=4e63ecae497844098f406f2a9ab5cb7e&pvs=4"
+          target="_blank"
+          className="font-semibold hover:underline"
+        >
+          기존 전송 내역 보기 →
+        </Link>
+      </div>
       <ul className="space-y-6">
         {list.map((item) => (
           <Product
