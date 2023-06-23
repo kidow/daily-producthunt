@@ -6,7 +6,7 @@
 
 ### 프로젝트 스택
 
-- Next.js 13 (App Router)
+- Next.js 13 (**App Router**)
 - TailwindCSS
 - TypeScript
 - Heroicons
