@@ -11,7 +11,7 @@ export default function Page() {
 
   useEffect(() => {
     if (id) {
-      replace(`/product/${id}` + '?utm_source=daily_producthunt')
+      replace(`/product/${id}` + '?ref=daily_producthunt')
     }
   }, [])
   return <>링크 이동 중...</>
