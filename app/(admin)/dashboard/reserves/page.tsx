@@ -257,18 +257,21 @@ export default function Page() {
               placeholder="URL"
               required
               type="url"
+              autoComplete="off"
               {...register('url', { required: true })}
             />
             <input
               className="tw-input"
               placeholder="이름"
               required
+              autoComplete="off"
               {...register('name', { required: true })}
             />
             <input
               className="tw-input col-span-3"
               placeholder="Icon URL"
               required
+              autoComplete="off"
               type="url"
               {...register('iconUrl', { required: true })}
             />
@@ -276,6 +279,7 @@ export default function Page() {
               className="tw-input col-span-3"
               placeholder="Cover URL"
               required
+              autoComplete="off"
               type="url"
               {...register('coverUrl', { required: true })}
             />
@@ -286,6 +290,7 @@ export default function Page() {
                     value={tag}
                     className="tw-input"
                     placeholder={`Tag ${i + 1}`}
+                    autoComplete="off"
                     readOnly
                   />
                   {!!tagList.length && (
@@ -324,24 +329,28 @@ export default function Page() {
               className="tw-input col-span-3"
               placeholder="타이틀"
               required
+              autoComplete="off"
               {...register('title', { required: true })}
             />
             <input
               className="tw-input col-span-3"
               placeholder="한 줄 소개"
               required
+              autoComplete="off"
               {...register('intro', { required: true })}
             />
             <input
               className="tw-input col-span-3"
               placeholder="핵심 기능"
               required
+              autoComplete="off"
               {...register('core', { required: true })}
             />
             <input
               className="tw-input col-span-3"
               placeholder="지원 플랫폼"
               required
+              autoComplete="off"
               {...register('platform', { required: true })}
             />
             <input
