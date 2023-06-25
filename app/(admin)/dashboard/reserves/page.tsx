@@ -292,6 +292,7 @@ export default function Page() {
                     placeholder={`Tag ${i + 1}`}
                     autoComplete="off"
                     readOnly
+                    autoFocus
                   />
                   {!!tagList.length && (
                     <div className="absolute left-0 top-12 z-10 hidden w-full bg-black group-focus-within:block">
@@ -357,6 +358,7 @@ export default function Page() {
               className="tw-input col-span-3"
               placeholder="가격 정책"
               required
+              autoComplete="off"
               {...register('pricing', { required: true })}
             />
             <div className="flex gap-2">
