@@ -61,6 +61,7 @@ export default function Page() {
             <th>슬랙</th>
             <th>노션</th>
             <th>디스코드</th>
+            <th>텔레그램</th>
             <th>가입일</th>
           </tr>
         }
@@ -71,6 +72,7 @@ export default function Page() {
               <td>{item.slack_token}</td>
               <td>{item.notion_token}</td>
               <td rowSpan={2}>{item.discord_webhook_url}</td>
+              <td rowSpan={2}>{item.telegram_chatting_id}</td>
               <td rowSpan={2}>
                 {dayjs(item.created_at).locale('ko').format('L LT')}
               </td>
