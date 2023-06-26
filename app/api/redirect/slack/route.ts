@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   })
   const { channels } = await bot.conversations.list({
     exclude_archived: true,
-    types: 'im'
+    types: 'im,mpim'
   })
   const channelId = channels?.find(
     (item) => item.user === result.authed_user?.id
@@ -61,6 +61,7 @@ export async function GET(req: Request) {
       ? '통합이 완료되었습니다. 이 창을 닫아주세요.'
       : '슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.',
     result,
-    channels
+    channels,
+    user
   })
 }
