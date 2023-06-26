@@ -283,15 +283,15 @@ export async function POST(req: Request) {
         })
       })
       if (!type) {
-        promises.concat(slack, notion, discord, telegram, tistory)
+        promises.push(...slack, ...notion, ...discord, ...telegram, tistory)
       } else if (type === 'slack') {
-        promises.concat(slack)
+        promises.push(...slack)
       } else if (type === 'notion') {
-        promises.concat(notion)
+        promises.push(...notion)
       } else if (type === 'discord') {
-        promises.concat(discord)
+        promises.push(...discord)
       } else if (type === 'telegram') {
-        promises.concat(telegram)
+        promises.push(...telegram)
       }
       const result = await Promise.all(promises)
       console.log('result', result)
