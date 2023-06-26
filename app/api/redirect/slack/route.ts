@@ -31,15 +31,25 @@ export async function GET(req: Request) {
   }
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
-  await supabase.from('connections').insert({
-    email: user?.email || null,
-    slack_token: result.access_token,
-    slack_channel_id: channelId
-  })
-
+  const { data } = await supabase
+    .from('connections')
+    .select('*')
+    .match({
+      email: user?.email,
+      slack_token: result.access_token,
+      slack_channel_id: channelId
+    })
+    .single()
+  if (!data) {
+    await supabase.from('connections').insert({
+      email: user?.email || null,
+      slack_token: result.access_token,
+      slack_channel_id: channelId
+    })
+  }
   const { ok } = await bot.chat.postMessage({
     channel: channelId!,
-    text: '통합이 완료되었습니다.'
+    text: data ? '이미 통합되어있습니다.' : '통합이 완료되었습니다.'
   })
 
   return NextResponse.json({
