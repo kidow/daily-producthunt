@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     redirect_uri: 'https://daily-producthunt.kidow.me/api/redirect/slack'
   })
 
-  const bot = new WebClient(result.access_token)
+  const bot = new WebClient(result.authed_user?.access_token)
   const { user } = await bot.users.identity({
     token: result.authed_user?.access_token
   })
@@ -22,6 +22,7 @@ export async function GET(req: Request) {
     (item) => item.user === result.authed_user?.id
   )?.id
   if (!channelId) {
+    console.log('channelId not found.')
     NextResponse.json({
       success: false,
       message:
