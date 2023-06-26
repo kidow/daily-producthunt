@@ -29,26 +29,11 @@ export async function GET(req: Request) {
   })
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
-  const { data } = await supabase
-    .from('connections')
-    .select('email')
-    .eq('email', email)
-    .single()
-  if (data) {
-    await supabase
-      .from('connections')
-      .update({
-        notion_token: access_token,
-        notion_database_id: duplicated_template_id
-      })
-      .eq('email', email)
-  } else {
-    await supabase.from('connections').insert({
-      email,
-      notion_token: access_token,
-      notion_database_id: duplicated_template_id
-    })
-  }
+  await supabase.from('connections').insert({
+    email,
+    notion_token: access_token,
+    notion_database_id: duplicated_template_id
+  })
 
   return NextResponse.json({
     success: true,

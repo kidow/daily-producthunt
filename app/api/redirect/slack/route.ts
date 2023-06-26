@@ -30,23 +30,11 @@ export async function GET(req: Request) {
   }
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
-  const { data } = await supabase
-    .from('connections')
-    .select('email')
-    .eq('email', user?.email)
-    .single()
-  if (data) {
-    await supabase
-      .from('connections')
-      .update({ slack_token: result.access_token, slack_channel_id: channelId })
-      .eq('email', user?.email)
-  } else {
-    await supabase.from('connections').insert({
-      email: user?.email || null,
-      slack_token: result.access_token,
-      slack_channel_id: channelId
-    })
-  }
+  await supabase.from('connections').insert({
+    email: user?.email || null,
+    slack_token: result.access_token,
+    slack_channel_id: channelId
+  })
 
   const { ok } = await bot.chat.postMessage({
     channel: channelId!,
