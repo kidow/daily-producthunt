@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const { user } = await bot.users.identity({
     token: authed_user?.access_token
   })
-  const { channels } = await bot.conversations.list({ types: 'im' })
+  const { channels } = await bot.conversations.list({ types: 'im,mpim' })
   const channelId = channels?.find((item) => item.user === authed_user?.id)?.id
   if (!channelId) {
     console.log('user', authed_user)
@@ -48,13 +48,15 @@ export async function GET(req: Request) {
     })
   }
 
-  await bot.chat.postMessage({
+  const result = await bot.chat.postMessage({
     channel: channelId!,
     text: '통합이 완료되었습니다.'
   })
 
   return NextResponse.json({
-    success: true,
-    message: '통합이 완료되었습니다. 이 창을 닫아주세요.'
+    success: result.ok,
+    message: result.ok
+      ? '통합이 완료되었습니다. 이 창을 닫아주세요.'
+      : '슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.'
   })
 }

@@ -29,11 +29,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   return [
     {
-      url: 'https://dp.kidow.me',
+      url: 'https://daily-producthunt.kidow.me',
       lastModified: new Date()
     },
     ...results.map((item) => ({
-      url: `https://dp.kidow.me/product/${item.id}`,
+      url: `https://daily-producthunt.kidow.me/product/${item.id}`,
       lastModified: new Date()
     }))
   ]
