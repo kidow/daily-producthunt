@@ -13,11 +13,14 @@ export async function GET(req: Request) {
     redirect_uri: 'https://daily-producthunt.kidow.me/api/redirect/slack'
   })
 
-  const bot = new WebClient(result.authed_user?.access_token)
+  const bot = new WebClient(result.access_token)
   const { user } = await bot.users.identity({
     token: result.authed_user?.access_token
   })
-  const { channels } = await bot.conversations.list({ types: 'im' })
+  const { channels } = await bot.conversations.list({
+    exclude_archived: true,
+    types: 'im'
+  })
   const channelId = channels?.find(
     (item) => item.user === result.authed_user?.id
   )?.id
