@@ -15,7 +15,8 @@ export async function GET(req: Request) {
       redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/slack`
     })
     const identity = await web.auth.test()
-    const message = await web.chat.postMessage({
+    const bot = new WebClient(result.access_token)
+    const message = await bot.chat.postMessage({
       channel: '일간 ProductHunt',
       text: '채널 이름으로 테스트'
     })
