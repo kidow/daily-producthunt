@@ -28,6 +28,14 @@ export async function GET(req: Request) {
     })
   })
 
+  if (!duplicated_template_id) {
+    return NextResponse.json({
+      success: false,
+      message:
+        '템플릿이 존재하지 않습니다. 개발자가 제공한 템플릿을 선택했는지 확인해주세요. 만약 문제가 지속된다면 커뮤니티에 제보바랍니다.'
+    })
+  }
+
   const supabase = createRouteHandlerClient<Database>({ cookies })
   const { data } = await supabase
     .from('connections')

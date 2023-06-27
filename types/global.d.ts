@@ -5,6 +5,7 @@ declare namespace NodeJS {
   interface ProcessEnv {
     NODE_ENV: string
     NEXT_PUBLIC_ADMIN_EMAIL: string
+    NEXT_PUBLIC_BASE_URL: string
 
     NEXT_PUBLIC_SLACK_TOKEN: string
     NEXT_PUBLIC_SLACK_CLIENT_ID: string
