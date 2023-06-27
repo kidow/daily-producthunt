@@ -75,6 +75,7 @@ export async function GET(req: Request) {
     //   user
     // })
   } catch (err) {
+    console.log(err)
     Sentry.captureException(err)
     return NextResponse.json({ success: false })
   }
