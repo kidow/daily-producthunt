@@ -1,19 +1,10 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
-import { request } from 'services'
 import { cookies } from 'next/headers'
 
 export async function GET(req: Request) {
   const url = new URL(req.url)
-  const {
-    owner: {
-      user: {
-        person: { email }
-      }
-    },
-    access_token,
-    duplicated_template_id
-  } = await request<INotion['Oauth']>('https://api.notion.com/v1/oauth/token', {
+  const res = await fetch('https://api.notion.com/v1/oauth/token', {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -25,8 +16,18 @@ export async function GET(req: Request) {
       grant_type: 'authorization_code',
       code: url.searchParams.get('code') as string,
       redirect_uri: 'https://daily-producthunt.kidow.me/api/redirect/notion'
-    })
+    }),
+    cache: 'no-cache'
   })
+  const {
+    owner: {
+      user: {
+        person: { email }
+      }
+    },
+    access_token,
+    duplicated_template_id
+  } = await res.json()
 
   if (!duplicated_template_id) {
     return NextResponse.json({

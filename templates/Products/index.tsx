@@ -3,7 +3,7 @@
 import { Product, Spinner } from 'components'
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
-import { request, useIntersectionObserver } from 'services'
+import { useIntersectionObserver } from 'services'
 
 export interface Props {
   length: number
@@ -22,11 +22,10 @@ const Products: FC<Props> = ({ length, nextCursor, ...props }) => {
 
   const get = async () => {
     setIsLoading(true)
-    const { results, next_cursor, has_more } = await request<{
-      results: any[]
-      next_cursor: string | null
-      has_more: boolean
-    }>(`/api/products?cursor=${cursor}`)
+    const res = await fetch(`/api/products?cursor=${cursor}`, {
+      cache: 'no-cache'
+    })
+    const { results, next_cursor, has_more } = await res.json()
     setList((prevList) => [...prevList, ...results])
     setCursor(next_cursor)
     setHasMore(has_more)

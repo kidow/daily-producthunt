@@ -5,7 +5,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from 'react'
 import { Button, Card, Icon, IconButton, Preview, Table } from 'components'
-import { toast, request, backdrop, isURL } from 'services'
+import { toast, backdrop, isURL } from 'services'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { Modal } from 'containers'
@@ -116,15 +116,13 @@ export default function Page() {
     if (!window.confirm('전송하시겠습니까?')) return
     backdrop(true)
     try {
-      const { success, message, data } = await request<{
-        success: true
-        message?: string
-        data: any
-      }>('/api/send-message', {
+      const res = await fetch('/api/send-message', {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ id, type })
+        body: JSON.stringify({ id, type }),
+        cache: 'no-cache'
       })
+      const { success, message, data } = await res.json()
       console.log('data', data)
       if (success) {
         toast.success('전송되었습니다.')
