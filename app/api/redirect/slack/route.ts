@@ -14,57 +14,57 @@ export async function GET(req: Request) {
       code: url.searchParams.get('code') as string,
       redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/slack`
     })
-
     const bot = new WebClient(result.access_token)
     const { user } = await bot.users.identity({
       token: result.authed_user?.access_token
     })
     const { channels } = await bot.conversations.list({
-      types: 'public_channel,private_channel,mpim,im',
-      limit: 1000
+      types: 'im',
+      limit: 100
     })
-    const channelId = channels?.find(
-      (item) => item.user === result.authed_user?.id
-    )?.id
-    if (!channelId) {
-      console.log('channelId not found.')
+    if (!channels) {
       return NextResponse.json({
         success: false,
         message:
-          '채널 id가 없습니다. 슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.'
+          '해당 채널이 존재하지 않습니다. 문제가 지속된다면 커뮤니티에 문의바랍니다.'
       })
     }
-
-    const supabase = createRouteHandlerClient<Database>({ cookies })
-    const { data } = await supabase
-      .from('connections')
-      .select('*')
-      .match({
-        email: user?.email,
-        slack_token: result.access_token,
-        slack_channel_id: channelId
+    console.log('channels.length', channels.length)
+    for (const channel of channels) {
+      const message = await bot.chat.postMessage({
+        channel: channel.id!,
+        text: '통합이 완료되었습니다.'
       })
-      .single()
-    if (!data) {
-      await supabase.from('connections').insert({
-        email: user?.email || null,
-        slack_token: result.access_token,
-        slack_channel_id: channelId
-      })
+      console.log('ok', message.ok)
+      if (message.ok) {
+        const supabase = createRouteHandlerClient<Database>({ cookies })
+        const { data } = await supabase
+          .from('connections')
+          .select('*')
+          .match({
+            email: user?.email,
+            slack_token: result.access_token,
+            slack_channel_id: channel.id
+          })
+          .single()
+        if (!data) {
+          await supabase.from('connections').insert({
+            email: user?.email || null,
+            slack_token: result.access_token,
+            slack_channel_id: channel.id
+          })
+        }
+        return NextResponse.json({
+          success: message.ok,
+          message: '통합이 완료되었습니다. 이 창을 닫아주세요.'
+        })
+      }
     }
-    const { ok } = await bot.chat.postMessage({
-      channel: channelId!,
-      text: data ? '이미 통합되어있습니다.' : '통합이 완료되었습니다.'
-    })
 
     return NextResponse.json({
-      success: ok,
-      message: ok
-        ? '통합이 완료되었습니다. 이 창을 닫아주세요.'
-        : '슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.',
-      result,
-      channels,
-      user
+      success: false,
+      message:
+        '슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.'
     })
   } catch (err) {
     console.log(err)
