@@ -12,7 +12,7 @@ export async function GET(req: Request) {
       client_id: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID,
       client_secret: process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET,
       code: url.searchParams.get('code') as string,
-      redirect_uri: 'https://417c-210-97-13-99.jp.ngrok.io/api/redirect/slack'
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/slack`
     })
     const identity = await web.auth.test()
 
