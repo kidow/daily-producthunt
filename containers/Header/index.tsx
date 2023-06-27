@@ -43,6 +43,15 @@ const Header: FC<Props> = () => {
               커뮤니티
             </Link>
           </li>
+          <li>
+            <Link
+              href="https://slashpage.com/daily-producthunt/y3p4kj92ynkv1m57q1x8"
+              target="_blank"
+              className="hover:underline"
+            >
+              구독
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

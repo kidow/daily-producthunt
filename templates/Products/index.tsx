@@ -49,12 +49,12 @@ const Products: FC<Props> = ({ length, nextCursor, ...props }) => {
           createdAt={item.created_time}
         />
       ))}
+      <div ref={ref} />
       {isLoading && (
         <div className="flex justify-center">
           <Spinner className="h-6 w-6" />
         </div>
       )}
-      <div ref={ref} />
     </>
   )
 }

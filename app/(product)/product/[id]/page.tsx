@@ -103,7 +103,7 @@ export default async function Page({ params }: Props) {
         <img
           src={coverUrl}
           alt="cover image"
-          className="mb-4 rounded md:mb-10"
+          className="mb-4 w-full rounded md:mb-10"
         />
         <div className="flex gap-4 md:m-10 md:gap-5">
           <img
@@ -132,7 +132,7 @@ export default async function Page({ params }: Props) {
               {tags.map((item: any, key: number) => (
                 <li
                   key={key}
-                  className="rounded-full border border-neutral-700 bg-opacity-70 px-1.5 py-0.5 text-sm"
+                  className="rounded-full border border-neutral-700 bg-opacity-70 px-2 py-1 text-sm"
                 >
                   {item.name}
                 </li>
