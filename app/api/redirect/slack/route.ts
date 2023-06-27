@@ -8,15 +8,19 @@ export async function GET(req: Request) {
   const web = new WebClient(process.env.NEXT_PUBLIC_SLACK_TOKEN)
   const url = new URL(req.url)
   try {
-    // const result = await web.oauth.v2.access({
-    //   client_id: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID,
-    //   client_secret: process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET,
-    //   code: url.searchParams.get('code') as string,
-    //   redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/slack`
-    // })
+    const result = await web.oauth.v2.access({
+      client_id: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID,
+      client_secret: process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET,
+      code: url.searchParams.get('code') as string,
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/slack`
+    })
     const identity = await web.auth.test()
+    const message = await web.chat.postMessage({
+      channel: '일간 ProductHunt',
+      text: '채널 이름으로 테스트'
+    })
 
-    return NextResponse.json({ identity })
+    return NextResponse.json({ result, identity, message })
 
     // const bot = new WebClient(result.access_token)
     // const { user } = await bot.users.identity({
