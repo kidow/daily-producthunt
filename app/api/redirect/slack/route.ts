@@ -20,12 +20,12 @@ export async function GET(req: Request) {
       token: result.authed_user?.access_token
     })
     const { channels } = await bot.conversations.list({
-      types: 'public_channel,private_channel,mpim,im',
-      limit: 1000
+      types: 'im'
     })
-    const channelId = channels?.find(
-      (item) => item.user === result.authed_user?.id
-    )?.id
+    const channelsInfo = await Promise.all(
+      channels!.map((item) => bot.conversations.info({ channel: item.id! }))
+    )
+    const channelId = channels?.find((item) => item.user === user?.id)?.id
     if (!channelId) {
       console.log('channelId not found.')
       return NextResponse.json({
@@ -62,8 +62,9 @@ export async function GET(req: Request) {
       message: ok
         ? '통합이 완료되었습니다. 이 창을 닫아주세요.'
         : '슬랙 연결에 실패했습니다. 문제가 계속 반복된다면 커뮤니티에 문의해주시기 바랍니다.',
-      result,
+      channelsInfo,
       channels,
+      result,
       user
     })
   } catch (err) {
