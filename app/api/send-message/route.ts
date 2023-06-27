@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { WebClient } from '@slack/web-api'
 import { Client } from '@notionhq/client'
 import TelegramBot from 'node-telegram-bot-api'
+import * as Sentry from '@sentry/nextjs'
 
 export async function POST(req: Request) {
   const { id, type } = await req.json()
@@ -223,7 +224,8 @@ export async function POST(req: Request) {
                   url: `https://daily-produchunt.kidow.me/l?id=${page.id}`
                 }
               ]
-            })
+            }),
+            cache: 'no-cache'
           })
         })
       const telegram = users
@@ -280,11 +282,10 @@ export async function POST(req: Request) {
           }</p>\n<p class=\"og-host\" data-ke-size=\"size16\">${
             new URL(data.url).host
           }</p>\n</div>\n</a></figure>\n<figure id=\"og_1687252745800\" contenteditable=\"false\" data-ke-type=\"opengraph\" data-ke-align=\"alignCenter\" data-og-type=\"website\" data-og-title=\"일간 ProductHunt\" data-og-description=\"일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커\" data-og-host=\"slashpage.com\" data-og-source-url=\"https://slashpage.com/daily-producthunt\" data-og-url=\"https://slashpage.com/daily-producthunt\" data-og-image=\"https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512\"><a href=\"https://slashpage.com/daily-producthunt\" target=\"_blank\" rel=\"noopener\" data-source-url=\"https://slashpage.com/daily-producthunt\">\n<div class=\"og-image\" style=\"background-image: url('https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512');\">&nbsp;</div>\n<div class=\"og-text\">\n<p class=\"og-title\" data-ke-size=\"size16\">일간 ProductHunt</p>\n<p class=\"og-desc\" data-ke-size=\"size16\">일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커</p>\n<p class=\"og-host\" data-ke-size=\"size16\">slashpage.com</p>\n</div>\n</a></figure>`
-        })
+        }),
+        cache: 'no-cache'
       })
-      if (!type) {
-        promises.push(...slack, ...notion, ...discord, ...telegram, tistory)
-      } else if (type === 'slack') {
+      if (type === 'slack') {
         promises.push(...slack)
       } else if (type === 'notion') {
         promises.push(...notion)
@@ -292,6 +293,8 @@ export async function POST(req: Request) {
         promises.push(...discord)
       } else if (type === 'telegram') {
         promises.push(...telegram)
+      } else {
+        promises.push(...slack, ...notion, ...discord, ...telegram, tistory)
       }
       const result = await Promise.all(promises)
       console.log('result', result)
@@ -300,7 +303,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: false, data: [] })
   } catch (err) {
-    console.log('err', err)
+    console.log(err)
+    Sentry.captureException(err)
     return NextResponse.json({
       success: false,
       data: err,

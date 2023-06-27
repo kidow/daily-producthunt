@@ -27,7 +27,7 @@ export async function POST(req: Request) {
           .insert({ telegram_chatting_id: chatId })
         await bot.sendMessage(
           chatId,
-          `안녕하세요. 👋 반갑습니다. 이제부터 일간 ProductHunt에서 오는 콘텐츠를 수신하실 수 있습니다. 당신의 채팅 ID는 ${chatId}입니다.`,
+          `안녕하세요. 👋 반갑습니다. 이제부터 일간 ProductHunt에서 오는 콘텐츠를 수신하실 수 있습니다. 고객님의 채팅 ID는 ${chatId}입니다.`,
           { parse_mode: 'Markdown' }
         )
       }
