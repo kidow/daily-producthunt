@@ -23,5 +23,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_TISTORY_ACCESS_TOKEN: string
 
     NEXT_PUBLIC_TELEGRAM_BOT_TOKEN: string
+
+    NEXT_PUBLIC_SENTRY_DSN: string
   }
 }

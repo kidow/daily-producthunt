@@ -14,6 +14,7 @@ const Navigation: FC<Props> = () => {
 
   const list: Array<{ href: string; name: string }> = useMemo(
     () => [
+      { href: '/dashboard', name: '홈' },
       { href: '/dashboard/connections', name: '연결 목록' },
       { href: '/dashboard/reserves', name: '메시지 예약' }
     ],
