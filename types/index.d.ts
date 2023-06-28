@@ -167,6 +167,50 @@ interface Database {
           name?: string
         }
       }
+      histories: {
+        Row: {
+          id: string
+          url: string
+          icon_url: string
+          cover_url: string
+          name: string
+          title: string
+          intro: string
+          core: string
+          platform: string
+          pricing: string
+          tags: string[]
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          url?: string
+          icon_url?: string
+          cover_url?: string
+          name?: string
+          title?: string
+          intro?: string
+          core?: string
+          platform?: string
+          pricing?: string
+          tags?: string[]
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          url?: string
+          icon_url?: string
+          cover_url?: string
+          name?: string
+          title?: string
+          intro?: string
+          core?: string
+          platform?: string
+          pricing?: string
+          tags?: string[]
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
