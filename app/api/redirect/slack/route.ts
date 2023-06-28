@@ -29,13 +29,12 @@ export async function GET(req: Request) {
           '해당 채널이 존재하지 않습니다. 문제가 지속된다면 커뮤니티에 문의바랍니다.'
       })
     }
-    console.log('channels.length', channels.length)
+    console.log('channels', channels)
     for (const channel of channels) {
       const message = await bot.chat.postMessage({
         channel: channel.id!,
         text: '통합이 완료되었습니다.'
       })
-      console.log('ok', message.ok)
       if (message.ok) {
         const supabase = createRouteHandlerClient<Database>({ cookies })
         const { data } = await supabase
