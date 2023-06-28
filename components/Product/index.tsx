@@ -29,12 +29,12 @@ const Product: FC<Props> = ({ id, iconUrl, name, title, tags, createdAt }) => {
           <h3 className="text-lg font-semibold">{name}</h3>
           <p className="break-keep text-neutral-400">{title}</p>
           <ul className="flex flex-wrap items-center gap-2 pt-1">
-            {tags.map((tag: any) => (
+            {tags.map((tag, key) => (
               <li
-                key={tag.id}
+                key={key}
                 className="rounded-full border border-neutral-700 px-1.5 py-0.5 text-xs text-neutral-400"
               >
-                {tag.name}
+                {tag}
               </li>
             ))}
             <li className="text-xs text-neutral-500">

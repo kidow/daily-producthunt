@@ -16,7 +16,8 @@ const Navigation: FC<Props> = () => {
     () => [
       { href: '/dashboard', name: '홈' },
       { href: '/dashboard/connections', name: '연결 목록' },
-      { href: '/dashboard/reserves', name: '메시지 예약' }
+      { href: '/dashboard/reserves', name: '메시지 예약' },
+      { href: '/dashboard/histories', name: '전송 내역' }
     ],
     []
   )

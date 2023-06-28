@@ -8,7 +8,6 @@ import * as Sentry from '@sentry/nextjs'
 
 export async function POST(req: Request) {
   const { id, type } = await req.json()
-  const client = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY })
   const supabase = createRouteHandlerClient<Database>({ cookies })
 
   const [{ data }, { data: users }] = await Promise.all([
@@ -22,72 +21,23 @@ export async function POST(req: Request) {
 
   try {
     if (users) {
-      const page = await client.pages.create({
-        parent: {
-          type: 'database_id',
-          database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID
-        },
-        icon: {
-          type: 'external',
-          external: {
-            url: data.icon_url
-          }
-        },
-        cover: {
-          type: 'external',
-          external: {
-            url: data.cover_url
-          }
-        },
-        properties: {
-          이름: {
-            title: [
-              {
-                text: { content: data.name },
-                annotations: { bold: true }
-              }
-            ]
-          },
-          타이틀: {
-            rich_text: [
-              {
-                text: { content: data.title },
-                annotations: { bold: true }
-              }
-            ]
-          },
-          태그: {
-            multi_select: data.tags.map((text) => ({ name: text }))
-          },
-          URL: {
-            url: data.url
-          },
-          '한 줄 소개': {
-            rich_text: [{ text: { content: data.intro } }]
-          },
-          '핵심 기능': {
-            rich_text: [{ text: { content: data.core } }]
-          },
-          '지원 플랫폼': {
-            rich_text: [{ text: { content: data.platform } }]
-          },
-          '가격 정책': {
-            rich_text: [{ text: { content: data.pricing } }]
-          }
-        },
-        children: [
-          {
-            object: 'block',
-            type: 'image',
-            image: {
-              type: 'external',
-              external: {
-                url: data.cover_url
-              }
-            }
-          }
-        ]
-      })
+      const { data: page } = await supabase
+        .from('histories')
+        .insert({
+          url: data.url,
+          icon_url: data.icon_url,
+          cover_url: data.cover_url,
+          name: data.name,
+          title: data.title,
+          intro: data.intro,
+          core: data.core,
+          platform: data.platform,
+          pricing: data.pricing,
+          tags: data.tags
+        })
+        .select('id')
+        .single()
+
       let promises: Promise<any>[] = []
       const slack = users
         .filter((item) => !!item.slack_token && !!item.slack_channel_id)
@@ -101,7 +51,7 @@ export async function POST(req: Request) {
                 type: 'section',
                 text: {
                   type: 'mrkdwn',
-                  text: `*<https://daily-producthunt.kidow.me/l?id=${page.id}|${data.name} - ${data.title}>*`
+                  text: `*<https://daily-producthunt.kidow.me/l?id=${page?.id}|${data.name} - ${data.title}>*`
                 }
               },
               {
@@ -221,11 +171,11 @@ export async function POST(req: Request) {
                     url: data.icon_url
                   },
                   title: `${data.name} - ${data.title}`,
-                  url: `https://daily-produchunt.kidow.me/l?id=${page.id}`
+                  url: `https://daily-produchunt.kidow.me/l?id=${page?.id}`
                 }
               ]
             }),
-            cache: 'no-cache'
+            cache: 'no-store'
           })
         })
       const telegram = users
@@ -283,7 +233,7 @@ export async function POST(req: Request) {
             new URL(data.url).host
           }</p>\n</div>\n</a></figure>\n<figure id=\"og_1687252745800\" contenteditable=\"false\" data-ke-type=\"opengraph\" data-ke-align=\"alignCenter\" data-og-type=\"website\" data-og-title=\"일간 ProductHunt\" data-og-description=\"일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커\" data-og-host=\"slashpage.com\" data-og-source-url=\"https://slashpage.com/daily-producthunt\" data-og-url=\"https://slashpage.com/daily-producthunt\" data-og-image=\"https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512\"><a href=\"https://slashpage.com/daily-producthunt\" target=\"_blank\" rel=\"noopener\" data-source-url=\"https://slashpage.com/daily-producthunt\">\n<div class=\"og-image\" style=\"background-image: url('https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512');\">&nbsp;</div>\n<div class=\"og-text\">\n<p class=\"og-title\" data-ke-size=\"size16\">일간 ProductHunt</p>\n<p class=\"og-desc\" data-ke-size=\"size16\">일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커</p>\n<p class=\"og-host\" data-ke-size=\"size16\">slashpage.com</p>\n</div>\n</a></figure>`
         }),
-        cache: 'no-cache'
+        cache: 'no-store'
       })
       if (type === 'slack') {
         promises.push(...slack)

@@ -1,59 +1,60 @@
 'use client'
 
-import { Product, Spinner } from 'components'
-import { useEffect, useState } from 'react'
+import { Pagination, Product } from 'components'
+import { useState } from 'react'
 import type { FC } from 'react'
-import { useIntersectionObserver } from 'services'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { backdrop } from 'services'
 
 export interface Props {
-  length: number
-  nextCursor: string | null
-  hasMore: boolean
+  list: Database['public']['Tables']['histories']['Row'][]
+  total: number | null
 }
 interface State {}
 
-const Products: FC<Props> = ({ length, nextCursor, ...props }) => {
-  if (length !== 20) return null
-  const [ref, isIntersecting] = useIntersectionObserver<HTMLDivElement>()
-  const [list, setList] = useState<any[]>([])
-  const [cursor, setCursor] = useState<string | null>(nextCursor)
-  const [hasMore, setHasMore] = useState<boolean>(props.hasMore)
-  const [isLoading, setIsLoading] = useState(false)
+const Products: FC<Props> = (props) => {
+  const [list, setList] = useState<
+    Database['public']['Tables']['histories']['Row'][]
+  >(props.list || [])
+  const [page, setPage] = useState<number>(1)
+  const supabase = createClientComponentClient<Database>()
 
-  const get = async () => {
-    setIsLoading(true)
-    const res = await fetch(`/api/products?cursor=${cursor}`, {
-      cache: 'no-cache'
-    })
-    const { results, next_cursor, has_more } = await res.json()
-    setList((prevList) => [...prevList, ...results])
-    setCursor(next_cursor)
-    setHasMore(has_more)
-    setIsLoading(false)
+  const get = async (page: number = 1) => {
+    backdrop(true)
+    const { data, error } = await supabase
+      .from('histories')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range((page - 1) * 10, page * 10 - 1)
+      .limit(10)
+    setPage(page)
+    setList(data || [])
+    backdrop(false)
   }
 
-  useEffect(() => {
-    if (hasMore && isIntersecting) get()
-  }, [isIntersecting, hasMore])
   return (
     <>
-      {list.map((item) => (
-        <Product
-          key={item.id}
-          id={item.id}
-          iconUrl={item.icon.external.url}
-          name={item.properties['이름'].title[0].text.content}
-          title={item.properties['타이틀'].rich_text[0].text.content}
-          tags={item.properties.태그.multi_select}
-          createdAt={item.created_time}
+      <ul className="space-y-6">
+        {list.map((item) => (
+          <Product
+            key={item.id}
+            id={item.id}
+            iconUrl={item.icon_url}
+            name={item.name}
+            title={item.title}
+            tags={item.tags}
+            createdAt={item.created_at}
+          />
+        ))}
+      </ul>
+      <div className="mt-6 flex justify-center">
+        <Pagination
+          page={page}
+          onChange={(page) => get(page)}
+          total={props.total || 0}
+          size={10}
         />
-      ))}
-      <div ref={ref} />
-      {isLoading && (
-        <div className="flex justify-center">
-          <Spinner className="h-6 w-6" />
-        </div>
-      )}
+      </div>
     </>
   )
 }
