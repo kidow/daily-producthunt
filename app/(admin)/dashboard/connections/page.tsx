@@ -1,7 +1,7 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Pagination, Table } from 'components'
+import { Icon, IconButton, Pagination, Table } from 'components'
 import { Fragment, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -19,7 +19,7 @@ export default function Page() {
   const [total, setTotal] = useState<number>(0)
   const supabase = createClientComponentClient<Database>()
 
-  const get = async (page: number = 1) => {
+  const getList = async (page: number = 1) => {
     setIsLoading(true)
     const { data, count, error } = await supabase
       .from('connections')
@@ -40,8 +40,14 @@ export default function Page() {
     }
   }
 
+  const getSlackInfo = async (token: string, channelId: string) => {
+    const res = await fetch(`/api/info?token=${token}&channelId=${channelId}`)
+    const data = await res.json()
+    console.log('data', data)
+  }
+
   useEffect(() => {
-    get()
+    getList()
   }, [])
   return (
     <div className="space-y-8">
@@ -78,7 +84,20 @@ export default function Page() {
               </td>
             </tr>
             <tr>
-              <td>{item.slack_channel_id}</td>
+              <td>
+                <div className="flex items-center justify-center gap-2">
+                  <span>{item.slack_channel_id}</span>
+                  {!!item.slack_token && item.slack_channel_id && (
+                    <IconButton
+                      onClick={() =>
+                        getSlackInfo(item.slack_token!, item.slack_channel_id!)
+                      }
+                    >
+                      <Icon.Slack />
+                    </IconButton>
+                  )}
+                </div>
+              </td>
               <td>{item.notion_database_id}</td>
             </tr>
           </Fragment>
@@ -87,7 +106,7 @@ export default function Page() {
       <Pagination
         page={page}
         size={20}
-        onChange={(page) => get(page)}
+        onChange={(page) => getList(page)}
         total={total}
       />
     </div>
