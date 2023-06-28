@@ -296,9 +296,9 @@ export async function POST(req: Request) {
       } else {
         promises.push(...slack, ...notion, ...discord, ...telegram, tistory)
       }
-      const result = await Promise.all(promises)
+      const result = await Promise.allSettled(promises)
       console.log('result', result)
-      return NextResponse.json({ success: true, data: [] })
+      return NextResponse.json({ success: true, data: result })
     }
 
     return NextResponse.json({ success: false, data: [] })
