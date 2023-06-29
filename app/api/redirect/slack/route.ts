@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const supabase = createRouteHandlerClient<Database>({ cookies })
   const { error } = await supabase
     .from('connections')
-    .upsert({ slack_webhook_url: incoming_webhook?.url })
+    .insert({ slack_webhook_url: incoming_webhook?.url })
   if (error) {
     Sentry.captureException(error)
   }
