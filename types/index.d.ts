@@ -81,6 +81,7 @@ interface Database {
           email: string | null
           slack_token: string | null
           slack_channel_id: string | null
+          slack_webhook_url: string | null
           notion_token: string | null
           notion_database_id: string | null
           discord_webhook_url: string | null
@@ -92,6 +93,7 @@ interface Database {
           email?: string | null
           slack_token?: string | null
           slack_channel_id?: string | null
+          slack_webhook_url?: string | null
           notion_token?: string | null
           notion_database_id?: string | null
           discord_webhook_url?: string | null
@@ -103,6 +105,7 @@ interface Database {
           email?: string | null
           slack_token?: string | null
           slack_channel_id?: string | null
+          slack_webhook_url?: string | null
           notion_token?: string | null
           notion_database_id?: string | null
           discord_webhook_url?: string | null
