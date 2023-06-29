@@ -5,5 +5,5 @@ import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 export default function Page() {
-  return <div>asd</div>
+  return <div></div>
 }

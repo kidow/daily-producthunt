@@ -16,18 +16,9 @@ export async function GET(req: Request) {
       grant_type: 'authorization_code',
       code: url.searchParams.get('code') as string,
       redirect_uri: 'https://daily-producthunt.kidow.me/api/redirect/notion'
-    }),
-    cache: 'no-cache'
+    })
   })
-  const {
-    owner: {
-      user: {
-        person: { email }
-      }
-    },
-    access_token,
-    duplicated_template_id
-  } = await res.json()
+  const { access_token, duplicated_template_id } = await res.json()
 
   if (!duplicated_template_id) {
     return NextResponse.json({
@@ -38,26 +29,10 @@ export async function GET(req: Request) {
   }
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
-  const { data } = await supabase
-    .from('connections')
-    .select('notion_token, notion_database_id')
-    .eq('email', email)
-    .single()
-  if (data) {
-    await supabase
-      .from('connections')
-      .update({
-        notion_token: access_token,
-        notion_database_id: duplicated_template_id
-      })
-      .eq('email', email)
-  } else {
-    await supabase.from('connections').insert({
-      email,
-      notion_token: access_token,
-      notion_database_id: duplicated_template_id
-    })
-  }
+  await supabase.from('connections').upsert({
+    notion_token: access_token,
+    notion_database_id: duplicated_template_id
+  })
 
   return NextResponse.json({
     success: true,
