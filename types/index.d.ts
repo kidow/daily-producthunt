@@ -5,24 +5,6 @@ interface ReactProps {
 interface INotion {
   Oauth: {
     access_token: string
-    token_type: string
-    bot_id: string
-    workspace_name: string
-    workspace_icon: string
-    workspace_id: string
-    owner: {
-      type: string
-      user: {
-        object: string
-        id: string
-        name: string
-        avatar_url: string
-        type: string
-        person: {
-          email: string
-        }
-      }
-    }
     duplicated_template_id: string
   }
   Database: {}
@@ -78,9 +60,6 @@ interface Database {
         Row: {
           id: number
           created_at: string
-          email: string | null
-          slack_token: string | null
-          slack_channel_id: string | null
           slack_webhook_url: string | null
           notion_token: string | null
           notion_database_id: string | null
@@ -90,9 +69,6 @@ interface Database {
         Insert: {
           id?: number
           created_at?: string
-          email?: string | null
-          slack_token?: string | null
-          slack_channel_id?: string | null
           slack_webhook_url?: string | null
           notion_token?: string | null
           notion_database_id?: string | null
@@ -102,9 +78,6 @@ interface Database {
         Update: {
           id?: number
           created_at?: string
-          email?: string | null
-          slack_token?: string | null
-          slack_channel_id?: string | null
           slack_webhook_url?: string | null
           notion_token?: string | null
           notion_database_id?: string | null

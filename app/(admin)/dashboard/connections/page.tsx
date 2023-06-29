@@ -1,12 +1,11 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Button, Icon, IconButton, Pagination, Table } from 'components'
+import { Pagination, Table } from 'components'
 import { Fragment, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { toast } from 'services'
-import { Modal } from 'containers'
 
 dayjs.extend(localizedFormat)
 
@@ -18,7 +17,6 @@ export default function Page() {
   const [page, setPage] = useState<number>(1)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [total, setTotal] = useState<number>(0)
-  const [isTestOpen, setIsTestOpen] = useState<boolean>(false)
   const supabase = createClientComponentClient<Database>()
 
   const getList = async (page: number = 1) => {
@@ -42,12 +40,6 @@ export default function Page() {
     }
   }
 
-  const getSlackInfo = async (token: string, channelId: string) => {
-    const res = await fetch(`/api/info?token=${token}&channelId=${channelId}`)
-    const data = await res.json()
-    console.log('data', data)
-  }
-
   useEffect(() => {
     getList()
   }, [])
@@ -62,14 +54,12 @@ export default function Page() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="tw-input"
           />
-          <Button text="전송 테스트" onClick={() => setIsTestOpen(true)} />
         </div>
         <Table
           list={list}
           loading={isLoading}
           columns={
             <tr>
-              <th>이메일</th>
               <th>슬랙</th>
               <th>노션</th>
               <th>디스코드</th>
@@ -80,8 +70,7 @@ export default function Page() {
           renderItem={(item, key) => (
             <Fragment key={key}>
               <tr>
-                <td rowSpan={2}>{item.email}</td>
-                <td>{item.slack_token}</td>
+                <td rowSpan={2}>{item.slack_webhook_url}</td>
                 <td>{item.notion_token}</td>
                 <td rowSpan={2}>{item.discord_webhook_url}</td>
                 <td rowSpan={2}>{item.telegram_chatting_id}</td>
@@ -90,23 +79,6 @@ export default function Page() {
                 </td>
               </tr>
               <tr>
-                <td>
-                  <div className="flex items-center justify-center gap-2">
-                    <span>{item.slack_channel_id}</span>
-                    {!!item.slack_token && item.slack_channel_id && (
-                      <IconButton
-                        onClick={() =>
-                          getSlackInfo(
-                            item.slack_token!,
-                            item.slack_channel_id!
-                          )
-                        }
-                      >
-                        <Icon.Slack />
-                      </IconButton>
-                    )}
-                  </div>
-                </td>
                 <td>{item.notion_database_id}</td>
               </tr>
             </Fragment>
@@ -119,7 +91,6 @@ export default function Page() {
           total={total}
         />
       </div>
-      <Modal.Test isOpen={isTestOpen} onClose={() => setIsTestOpen(false)} />
     </>
   )
 }
