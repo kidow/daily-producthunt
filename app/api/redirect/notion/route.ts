@@ -29,7 +29,7 @@ export async function GET(req: Request) {
   }
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
-  await supabase.from('connections').upsert({
+  await supabase.from('connections').insert({
     notion_token: access_token,
     notion_database_id: duplicated_template_id
   })
