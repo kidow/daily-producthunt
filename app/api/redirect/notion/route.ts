@@ -28,7 +28,6 @@ export async function GET(req: Request) {
         '템플릿이 존재하지 않습니다. 개발자가 제공한 템플릿을 선택했는지 확인해주세요. 만약 문제가 지속된다면 커뮤니티에 제보바랍니다.'
     })
   }
-  console.log(access_token, duplicated_template_id)
 
   const supabase = createRouteHandlerClient<Database>({ cookies })
   const { error } = await supabase.from('connections').insert({
