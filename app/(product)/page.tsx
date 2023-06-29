@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   const supabase = createServerComponentClient<Database>({ cookies })
   const { data, count } = await supabase

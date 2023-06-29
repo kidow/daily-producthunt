@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { WithContext, SoftwareApplication } from 'schema-dts'
 import { supabase } from 'services'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: {
     id: string
@@ -28,7 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
       description: data?.intro
-    }
+    },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL)
   }
 }
 

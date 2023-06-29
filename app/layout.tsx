@@ -19,12 +19,12 @@ export function generateMetadata(): Metadata {
     publisher: 'Vercel',
     robots: 'index, follow',
     alternates: {
-      canonical: 'https://daily-producthunt.kidow.me'
+      canonical: process.env.NEXT_PUBLIC_BASE_URL
     },
     openGraph: {
       title,
       description,
-      url: 'https://daily-producthunt.kidow.me'
+      url: process.env.NEXT_PUBLIC_BASE_URL
     },
     twitter: {
       title,
@@ -38,7 +38,8 @@ export function generateMetadata(): Metadata {
         'naver-site-verification': 'f9be48b5bf4739e1027a3d4405d983a439c4a6e1'
       }
     },
-    category: 'Media'
+    category: 'Media',
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL)
   }
 }
 
