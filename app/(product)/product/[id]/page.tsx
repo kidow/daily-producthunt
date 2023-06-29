@@ -1,10 +1,8 @@
-import { redirect } from 'next/navigation'
-import { Client } from '@notionhq/client'
+import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WithContext, SoftwareApplication } from 'schema-dts'
-
-const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY })
+import { supabase } from 'services'
 
 interface Props {
   params: {
@@ -12,85 +10,50 @@ interface Props {
   }
 }
 
-async function* getProducts() {
-  let isFirst = true
-  let nextCursor: string | null = null
-
-  const notion = new Client({
-    auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY
-  })
-
-  while (isFirst || nextCursor) {
-    const { results, next_cursor } = await notion.databases.query({
-      database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID,
-      sorts: [{ property: '생성 일시', direction: 'ascending' }],
-      ...(!!nextCursor ? { start_cursor: nextCursor } : {})
-    })
-    nextCursor = next_cursor
-    if (isFirst) isFirst = false
-
-    yield results
-  }
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const page = (await notion.pages.retrieve({
-    page_id: params.id
-  })) as any
-  const url = page.properties['URL'].url
-  const name = page.properties['이름'].title[0].text.content
-  const title = page.properties['타이틀'].rich_text[0].text.content
-  const intro = page.properties['한 줄 소개'].rich_text[0].text.content
-  const image = page.cover.external.url
+  const { data } = await supabase
+    .from('histories')
+    .select('*')
+    .eq('id', params.id)
+    .single()
   return {
-    title: `${name} - ${title} | 일간 ProductHunt`,
-    description: intro,
+    title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
+    description: data?.intro,
     openGraph: {
-      title: `${name} - ${title} | 일간 ProductHunt`,
-      description: intro,
-      url
+      title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
+      description: data?.intro,
+      url: data?.url
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${name} - ${title} | 일간 ProductHunt`,
-      description: intro
+      title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
+      description: data?.intro
     }
   }
 }
 
 export async function generateStaticParams() {
-  let results = []
-  for await (const arr of getProducts()) {
-    results.push(...arr)
-  }
-  return results
+  const { data } = await supabase.from('histories').select('id')
+  return data || []
 }
 
 export default async function Page({ params }: Props) {
-  const page = (await notion.pages.retrieve({
-    page_id: params.id
-  })) as any
-  if (!page) {
-    redirect('/')
+  const { data } = await supabase
+    .from('histories')
+    .select('*')
+    .eq('id', params.id)
+    .single()
+  if (!data) {
+    notFound()
   }
-  const url = page.properties['URL'].url
-  const name = page.properties['이름'].title[0].text.content
-  const iconUrl = page.icon.external.url
-  const coverUrl = page.cover.external.url
-  const title = page.properties['타이틀'].rich_text[0].text.content
-  const intro = page.properties['한 줄 소개'].rich_text[0].text.content
-  const core = page.properties['핵심 기능'].rich_text[0].text.content
-  const platform = page.properties['지원 플랫폼'].rich_text[0].text.content
-  const pricing = page.properties['가격 정책'].rich_text[0].text.content
-  const tags = page.properties.태그.multi_select
   const jsonLd: WithContext<SoftwareApplication> = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name,
-    operatingSystem: platform,
+    name: data.name,
+    operatingSystem: data.platform,
     offers: {
       '@type': 'Offer',
-      price: pricing
+      price: data.pricing
     }
   }
   return (
@@ -101,40 +64,40 @@ export default async function Page({ params }: Props) {
       />
       <div className="mx-auto max-w-4xl px-4">
         <img
-          src={coverUrl}
+          src={data.cover_url}
           alt="cover image"
           className="mb-4 w-full rounded md:mb-10"
         />
         <div className="flex gap-4 md:m-10 md:gap-5">
           <img
-            src={iconUrl}
+            src={data.icon_url}
             alt="logo"
             className="h-12 w-12 rounded md:h-20 md:w-20"
           />
           <div className="space-y-2">
             <h1>
               <Link
-                href={url + '/?ref=daily_producthunt'}
+                href={data.url + '/?ref=daily_producthunt'}
                 target="_blank"
                 className="text-2xl font-semibold text-blue-500 hover:underline"
               >
-                {name}
+                {data.name}
               </Link>
             </h1>
-            <p className="text-lg">{title}</p>
+            <p className="text-lg">{data.title}</p>
             <ul className="list-inside list-disc text-neutral-200">
-              <li className="break-keep">{intro}</li>
-              <li className="break-keep">{core}</li>
-              <li className="break-keep">{platform}</li>
-              <li className="break-keep">{pricing}</li>
+              <li className="break-keep">{data.intro}</li>
+              <li className="break-keep">{data.core}</li>
+              <li className="break-keep">{data.platform}</li>
+              <li className="break-keep">{data.pricing}</li>
             </ul>
             <ul className="flex flex-wrap gap-2 pt-2">
-              {tags.map((item: any, key: number) => (
+              {data.tags.map((tag, key) => (
                 <li
                   key={key}
                   className="rounded-full border border-neutral-700 bg-opacity-70 px-2 py-1 text-sm"
                 >
-                  {item.name}
+                  {tag}
                 </li>
               ))}
             </ul>

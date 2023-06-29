@@ -7,7 +7,6 @@ import classnames from 'classnames'
 import { createPortal } from 'react-dom'
 
 import AddTagModal from './AddTag'
-import TestModal from './Test'
 
 interface Props extends ModalProps, ReactProps {}
 
@@ -98,6 +97,5 @@ const Modal: FC<Props> = ({
 }
 
 export default Object.assign(Modal, {
-  AddTag: AddTagModal,
-  Test: TestModal
+  AddTag: AddTagModal
 })

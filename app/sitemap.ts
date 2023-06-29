@@ -1,38 +1,14 @@
 import { MetadataRoute } from 'next'
-import { Client } from '@notionhq/client'
-
-async function* getProducts() {
-  let isFirst = true
-  let nextCursor: string | null = null
-
-  const notion = new Client({
-    auth: process.env.NEXT_PUBLIC_NOTION_SECRET_KEY
-  })
-
-  while (isFirst || nextCursor) {
-    const { results, next_cursor } = await notion.databases.query({
-      database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID,
-      sorts: [{ property: '생성 일시', direction: 'ascending' }],
-      ...(!!nextCursor ? { start_cursor: nextCursor } : {})
-    })
-    nextCursor = next_cursor
-    if (isFirst) isFirst = false
-
-    yield results
-  }
-}
+import { supabase } from 'services'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let results = []
-  for await (const arr of getProducts()) {
-    results.push(...arr)
-  }
+  const { data } = await supabase.from('histories').select('id')
   return [
     {
       url: 'https://daily-producthunt.kidow.me',
       lastModified: new Date()
     },
-    ...results.map((item) => ({
+    ...data!.map((item) => ({
       url: `https://daily-producthunt.kidow.me/product/${item.id}`,
       lastModified: new Date()
     }))
