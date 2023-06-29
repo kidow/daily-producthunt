@@ -16,7 +16,7 @@ export async function GET(req: Request) {
     body: JSON.stringify({
       grant_type: 'authorization_code',
       code: url.searchParams.get('code') as string,
-      redirect_uri: 'https://daily-producthunt.kidow.me/api/redirect/notion'
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/notion`
     })
   })
   const { access_token, duplicated_template_id } = await res.json()
