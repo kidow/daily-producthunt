@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from 'react'
-import { Button, Card, Icon, IconButton, Preview, Table } from 'components'
+import { Button, Card, IconButton, Preview, Table } from 'components'
 import { toast, backdrop, isURL } from 'services'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
@@ -109,17 +109,14 @@ export default function Page() {
     getList()
   }
 
-  const sendMessage = async (
-    id: number,
-    type?: 'slack' | 'notion' | 'discord' | 'telegram'
-  ) => {
+  const sendMessage = async (id: number) => {
     if (!window.confirm('전송하시겠습니까?')) return
     backdrop(true)
     try {
       const res = await fetch('/api/send-message', {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ id, type }),
+        body: JSON.stringify({ id }),
         cache: 'no-cache'
       })
       const { success, message, data } = await res.json()
@@ -192,20 +189,6 @@ export default function Page() {
                   <div className="flex items-center justify-center gap-2">
                     <IconButton onClick={() => sendMessage(item.id)}>
                       <PaperAirplaneIcon />
-                    </IconButton>
-                    <IconButton onClick={() => sendMessage(item.id, 'slack')}>
-                      <Icon.Slack />
-                    </IconButton>
-                    <IconButton onClick={() => sendMessage(item.id, 'notion')}>
-                      <Icon.Notion />
-                    </IconButton>
-                    <IconButton onClick={() => sendMessage(item.id, 'discord')}>
-                      <Icon.Discord />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => sendMessage(item.id, 'telegram')}
-                    >
-                      <Icon.Telegram />
                     </IconButton>
                     <IconButton onClick={() => removeReserve(item.id)}>
                       <TrashIcon />
