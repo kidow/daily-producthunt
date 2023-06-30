@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { WithContext, SoftwareApplication } from 'schema-dts'
+import type { WithContext, SoftwareApplication } from 'schema-dts'
 import { supabase } from 'services'
+import { CallToAction } from 'templates'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
     description: data?.intro,
+    keywords: `producthunt, ${data?.tags.join(', ')}`,
     openGraph: {
       title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
       description: data?.intro,
@@ -66,16 +69,22 @@ export default async function Page({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="mx-auto max-w-4xl px-4">
-        <img
+        <Image
           src={data.cover_url}
+          width={864}
+          height={510}
+          priority
           alt="cover image"
           className="mb-4 w-full rounded md:mb-10"
         />
-        <div className="flex gap-4 md:m-10 md:gap-5">
-          <img
+
+        <section className="flex gap-4 md:m-10 md:gap-5">
+          <Image
             src={data.icon_url}
+            height={48}
+            width={48}
             alt="logo"
-            className="h-12 w-12 rounded md:h-20 md:w-20"
+            className="rounded md:h-20 md:w-20"
           />
           <div className="space-y-2">
             <h1>
@@ -105,7 +114,9 @@ export default async function Page({ params }: Props) {
               ))}
             </ul>
           </div>
-        </div>
+        </section>
+
+        <CallToAction />
       </div>
     </>
   )

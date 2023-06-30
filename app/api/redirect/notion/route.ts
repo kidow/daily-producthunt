@@ -5,6 +5,12 @@ import * as Sentry from '@sentry/nextjs'
 
 export async function GET(req: Request) {
   const url = new URL(req.url)
+  const code = url.searchParams.get('code') as string
+  if (!code)
+    return NextResponse.json({
+      success: false,
+      message: '코드가 존재하지 않습니다.'
+    })
   const res = await fetch('https://api.notion.com/v1/oauth/token', {
     method: 'POST',
     headers: new Headers({
@@ -15,7 +21,7 @@ export async function GET(req: Request) {
     }),
     body: JSON.stringify({
       grant_type: 'authorization_code',
-      code: url.searchParams.get('code') as string,
+      code,
       redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/notion`
     })
   })

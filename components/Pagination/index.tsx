@@ -18,12 +18,14 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
 
   if (range.length < 2) {
     return (
-      <ul className="inline-flex divide-x divide-neutral-300 rounded-md border border-neutral-300 bg-white text-sm font-medium dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800">
-        <li className="inline-flex cursor-not-allowed items-center p-2 text-neutral-300">
+      <ul className="inline-flex select-none text-sm font-medium">
+        <li className="inline-flex h-9 w-9 cursor-not-allowed items-center justify-center text-neutral-500">
           <ChevronLeftIcon className="h-5 w-5" />
         </li>
-        <li className="inline-flex cursor-pointer items-center px-3 py-2">1</li>
-        <li className="inline-flex cursor-not-allowed items-center p-2 text-neutral-300">
+        <li className="inline-flex h-9 w-9 cursor-pointer items-center justify-center">
+          1
+        </li>
+        <li className="inline-flex h-9 w-9 cursor-not-allowed items-center justify-center text-neutral-500">
           <ChevronRightIcon className="h-5 w-5" />
         </li>
       </ul>
@@ -31,16 +33,16 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
   }
 
   return (
-    <ul className="inline-flex select-none divide-x divide-neutral-300 rounded-md border border-neutral-300 bg-white text-sm font-medium dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800">
+    <ul className="inline-flex select-none text-sm font-medium">
       <li
         className={classnames(
-          'inline-flex select-none items-center p-2',
+          'inline-flex h-9 w-9 select-none items-center justify-center rounded-full',
           page === 1
-            ? 'cursor-not-allowed'
-            : 'cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-500/30'
+            ? 'cursor-not-allowed text-neutral-500'
+            : 'cursor-pointer text-neutral-200 hover:bg-neutral-800'
         )}
         onClick={() => {
-          if (page === 1) return
+          if (page === 1 || range.length >= 2) return
           onChange(page - 1)
         }}
       >
@@ -49,7 +51,7 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
       {range.map((pageNumber, key) => {
         if (pageNumber === '...') {
           return (
-            <li key={key} className="inline-flex items-center p-2">
+            <li key={key} className="inline-flex items-center">
               &#8230;
             </li>
           )
@@ -58,10 +60,10 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
         return (
           <li
             className={classnames(
-              'inline-flex cursor-pointer select-none items-center px-3 py-2',
+              'inline-flex h-9 w-9 cursor-pointer select-none items-center justify-center rounded-full',
               pageNumber === page
-                ? 'bg-blue-100 dark:bg-blue-500'
-                : 'hover:bg-blue-50 dark:hover:bg-blue-500/30'
+                ? 'font-semibold text-blue-500'
+                : 'text-neutral-200 hover:bg-neutral-800'
             )}
             key={key}
             onClick={() => {
@@ -75,13 +77,13 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
       })}
       <li
         className={classnames(
-          'inline-flex select-none items-center p-2',
+          'inline-flex h-9 w-9 select-none items-center justify-center rounded-full',
           total < page * size
-            ? 'cursor-not-allowed'
-            : 'cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-500/30'
+            ? 'cursor-not-allowed text-neutral-500'
+            : 'cursor-pointer text-neutral-200 hover:bg-neutral-800'
         )}
         onClick={() => {
-          if (total < page * size) return
+          if (total < page * size || range.length >= 2) return
           onChange(page + 1)
         }}
       >

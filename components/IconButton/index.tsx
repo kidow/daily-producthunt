@@ -22,7 +22,7 @@ const IconButton: FC<Props> = ({ children, className, onClick }) => {
   return (
     <button
       className={classnames(
-        'group flex items-center justify-center rounded-full border border-neutral-600 bg-transparent p-2 hover:brightness-105 active:brightness-90 disabled:cursor-not-allowed',
+        'group flex items-center justify-center rounded-full border border-neutral-700 bg-neutral-800 p-2 hover:border-neutral-600 hover:bg-neutral-800 hover:brightness-105 active:brightness-90 disabled:cursor-not-allowed',
         className
       )}
       type="button"

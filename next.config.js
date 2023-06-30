@@ -1,7 +1,19 @@
 const { withSentryConfig } = require('@sentry/nextjs')
 
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ph-files.imgix.net'
+      }
+    ]
+  }
+}
+
 module.exports = withSentryConfig(
-  {},
+  nextConfig,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
@@ -21,9 +33,6 @@ module.exports = withSentryConfig(
 
     // Transpiles SDK to be compatible with IE11 (increases bundle size)
     transpileClientSDK: true,
-
-    // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,

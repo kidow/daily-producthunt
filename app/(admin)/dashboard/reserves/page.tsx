@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from 'react'
-import { Button, Card, IconButton, Preview, Table } from 'components'
+import { Button, Card, IconButton, Input, Preview, Table } from 'components'
 import { toast, backdrop, isURL } from 'services'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
@@ -44,7 +44,7 @@ export default function Page() {
       pricing: '가격 정책'
     }
   })
-  const [tags, setTags] = useState<string[]>(['Tag 1'])
+  const [tags, setTags] = useState<string[]>(['Tag 1', 'Tag 2', 'Tag 3'])
   const [reserveList, setReserveList] = useState<
     Database['public']['Tables']['reserves']['Row'][]
   >([])
@@ -248,38 +248,33 @@ export default function Page() {
         <Card title="메시지">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-3"
+            className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3"
           >
-            <input
-              className="tw-input col-span-2"
+            <Input
+              className="col-span-2"
               placeholder="URL"
               required
               type="url"
-              autoComplete="off"
-              {...register('url', { required: true })}
+              register={register('url', { required: true })}
             />
-            <input
-              className="tw-input"
+            <Input
               placeholder="이름"
               required
-              autoComplete="off"
-              {...register('name', { required: true })}
+              register={register('name', { required: true })}
             />
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="Icon URL"
               required
-              autoComplete="off"
               type="url"
-              {...register('iconUrl', { required: true })}
+              register={register('iconUrl', { required: true })}
             />
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="Cover URL"
               required
-              autoComplete="off"
               type="url"
-              {...register('coverUrl', { required: true })}
+              register={register('coverUrl', { required: true })}
             />
             <div className="col-span-3 flex flex-wrap items-center gap-4">
               {tags.map((tag, i) => (
@@ -324,40 +319,35 @@ export default function Page() {
                 type="button"
               />
             </div>
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="타이틀"
               required
-              autoComplete="off"
-              {...register('title', { required: true })}
+              register={register('title', { required: true })}
             />
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="한 줄 소개"
               required
-              autoComplete="off"
-              {...register('intro', { required: true })}
+              register={register('intro', { required: true })}
             />
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="핵심 기능"
               required
-              autoComplete="off"
-              {...register('core', { required: true })}
+              register={register('core', { required: true })}
             />
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="지원 플랫폼"
               required
-              autoComplete="off"
-              {...register('platform', { required: true })}
+              register={register('platform', { required: true })}
             />
-            <input
-              className="tw-input col-span-3"
+            <Input
+              className="col-span-3"
               placeholder="가격 정책"
               required
-              autoComplete="off"
-              {...register('pricing', { required: true })}
+              register={register('pricing', { required: true })}
             />
             <div className="flex gap-2">
               <Button
