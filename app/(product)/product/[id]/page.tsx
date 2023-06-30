@@ -6,7 +6,8 @@ import { supabase } from 'services'
 import { CallToAction } from 'templates'
 import Image from 'next/image'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'error'
+export const dynamicParams = true
 
 interface Props {
   params: {

@@ -8,7 +8,7 @@ export interface Props {}
 
 const CallToAction: FC<Props> = () => {
   return (
-    <section className="mx-auto max-w-lg space-y-4 rounded-xl border border-neutral-800 p-4 text-center">
+    <section className="bg-diagonal-lines mx-auto max-w-lg space-y-4 rounded-xl border border-neutral-800 px-4 py-8 text-center">
       <h3 className="text-lg font-semibold">
         매일 ProductHunt 제품들을 요약해서 전달합니다.
       </h3>
