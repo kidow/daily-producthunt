@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WithContext, SoftwareApplication } from 'schema-dts'
 import { supabase } from 'services'
+import { CallToAction } from 'templates'
 
 export const dynamic = 'force-dynamic'
 
@@ -71,7 +72,8 @@ export default async function Page({ params }: Props) {
           alt="cover image"
           className="mb-4 w-full rounded md:mb-10"
         />
-        <div className="flex gap-4 md:m-10 md:gap-5">
+
+        <section className="flex gap-4 md:m-10 md:gap-5">
           <img
             src={data.icon_url}
             alt="logo"
@@ -105,7 +107,9 @@ export default async function Page({ params }: Props) {
               ))}
             </ul>
           </div>
-        </div>
+        </section>
+
+        <CallToAction />
       </div>
     </>
   )
