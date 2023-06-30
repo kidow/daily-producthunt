@@ -44,7 +44,7 @@ export default function Page() {
       pricing: '가격 정책'
     }
   })
-  const [tags, setTags] = useState<string[]>(['Tag 1'])
+  const [tags, setTags] = useState<string[]>(['Tag 1', 'Tag 2', 'Tag 3'])
   const [reserveList, setReserveList] = useState<
     Database['public']['Tables']['reserves']['Row'][]
   >([])
