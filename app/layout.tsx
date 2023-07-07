@@ -1,6 +1,5 @@
 import { Backdrop, Toast } from 'containers'
 import './globals.css'
-import 'dayjs/locale/ko'
 import type { Metadata } from 'next'
 
 export interface Props extends ReactProps {}

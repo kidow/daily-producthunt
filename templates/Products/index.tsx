@@ -7,6 +7,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { backdrop } from 'services'
 import Link from 'next/link'
 import dayjs from 'dayjs'
+import 'dayjs/locale/ko'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
 dayjs.extend(relativeTime)
