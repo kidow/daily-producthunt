@@ -4,10 +4,8 @@ const { withSentryConfig } = require('@sentry/nextjs')
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'ph-files.imgix.net'
-      }
+      { protocol: 'https', hostname: 'ph-files.imgix.net' },
+      { protocol: 'https', hostname: 'i.imgur.com' }
     ]
   }
 }
