@@ -65,6 +65,7 @@ interface Database {
           notion_database_id: string | null
           discord_webhook_url: string | null
           telegram_chatting_id: number | null
+          jandi_webhook_url: string | null
         }
         Insert: {
           id?: number
@@ -74,6 +75,7 @@ interface Database {
           notion_database_id?: string | null
           discord_webhook_url?: string | null
           telegram_chatting_id?: number | null
+          jandi_webhook_url?: string | null
         }
         Update: {
           id?: number
@@ -83,6 +85,7 @@ interface Database {
           notion_database_id?: string | null
           discord_webhook_url?: string | null
           telegram_chatting_id?: number | null
+          jandi_webhook_url?: string | null
         }
       }
       reserves: {

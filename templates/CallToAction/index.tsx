@@ -4,7 +4,7 @@ import { Icon, IconButton } from 'components'
 import Link from 'next/link'
 import type { FC } from 'react'
 
-export interface Props {}
+export interface Props { }
 
 const CallToAction: FC<Props> = () => {
   return (
@@ -43,6 +43,11 @@ const CallToAction: FC<Props> = () => {
         >
           <IconButton>
             <Icon.Telegram />
+          </IconButton>
+        </Link>
+        <Link href="https://slashpage.com/daily-producthunt/wy9e1xp2x67zk27k35vz" target="_blank">
+          <IconButton>
+            <Icon.Jandi />
           </IconButton>
         </Link>
       </div>

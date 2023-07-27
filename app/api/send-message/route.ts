@@ -39,6 +39,7 @@ export async function POST(req: Request) {
 
       const result = await Promise.allSettled([
         ...users.map((item) => {
+          // 슬랙
           if (item.slack_webhook_url) {
             return fetch(item.slack_webhook_url, {
               method: 'POST',
@@ -81,6 +82,7 @@ export async function POST(req: Request) {
               })
             })
           }
+          // 노션
           if (!!item.notion_database_id && !!item.notion_token) {
             const notion = new Client({ auth: item.notion_token })
             return notion.pages.create({
@@ -141,6 +143,7 @@ export async function POST(req: Request) {
               ]
             })
           }
+          // 디스코드
           if (!!item.discord_webhook_url) {
             return fetch(item.discord_webhook_url!, {
               method: 'POST',
@@ -164,6 +167,7 @@ export async function POST(req: Request) {
               })
             })
           }
+          // 텔레그램
           if (!!item.telegram_chatting_id) {
             const bot = new TelegramBot(
               process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN
@@ -174,8 +178,28 @@ export async function POST(req: Request) {
               { parse_mode: 'Markdown' }
             )
           }
+          if (!!item.jandi_webhook_url) {
+            return fetch(item.jandi_webhook_url, {
+              method: 'POST',
+              headers: new Headers({
+                Accept: 'application/vnd.tosslab.jandi-v2+json',
+                'Content-Type': 'application/json'
+              }),
+              body: JSON.stringify({
+                body: `**[일간 ProductHunt]** ${data.name} - ${data.title}`,
+                connectColor: '#da552f',
+                connectInfo: [
+                  {
+                    title: `[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${data.id})`,
+                    description: `- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`
+                  }
+                ]
+              })
+            })
+          }
           return undefined
         }),
+        // 티스토리
         fetch('https://www.tistory.com/apis/post/write', {
           method: 'POST',
           headers: new Headers({ 'Content-Type': 'application/json' }),

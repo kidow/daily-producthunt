@@ -102,9 +102,26 @@ const Telegram = () => (
   </svg>
 )
 
+const Jandi = () => (
+  <svg
+    viewBox="0 0 22 22"
+    className="h-5 w-5"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M15.1729 22C20.5275 22 24 18.8999 24 13.1351V0H13.745V3.91067H19.4871V13.1309C19.4871 16.7251 17.8647 18.0865 15.1729 18.0865H13.745V22H15.1729ZM8.82732 22C3.47351 22 0.00141429 18.8773 0.00141429 13.0704L0 1.7926H10.2536V5.73253H4.51372V13.0662C4.51372 16.6866 6.13592 18.0579 8.82732 18.0579H10.255V22H8.82732Z"
+      fill="#00C473"
+    ></path>
+  </svg>
+)
+
 export default {
   Slack,
   Notion,
   Discord,
-  Telegram
+  Telegram,
+  Jandi
 }

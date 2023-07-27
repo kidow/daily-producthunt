@@ -10,7 +10,7 @@ export default function Page() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (
-      !/^https?:\/\/(?:canary|ptb)?\.?discord(?:app)?\.com\/api\/webhooks\/\d{17,19}\/[\w-]{68,72}$/.test(
+      !/^https:\/\/wh\.jandi\.com\/connect-api\/webhook\/[0-9]+\/[0-9a-f]{32}$/.test(
         url
       )
     ) {
@@ -18,16 +18,15 @@ export default function Page() {
       return
     }
     setIsLoading(true)
-    const res = await fetch('/api/webhook/discord', {
+    const res = await fetch('/api/webhook/jandi', {
       method: 'POST',
       headers: new Headers({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({ webhookUrl: url }),
-      cache: 'no-cache'
+      body: JSON.stringify({ webhookUrl: url })
     })
     const { success, message } = await res.json()
     setIsLoading(false)
     if (success) {
-      alert(message || '완료되었습니다!')
+      alert(message || '완료되었습니다.')
     } else {
       alert(
         message ||
@@ -54,7 +53,7 @@ export default function Page() {
           {isLoading ? '등록 중...' : '등록'}
         </button>
       </form>
-      <div className="text-center">디스코드 웹훅 URL을 붙여넣기하세요.</div>
+      <div className="text-center">잔디 웹훅 URL을 붙여넣기하세요.</div>
     </>
   )
 }
