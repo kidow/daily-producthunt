@@ -174,7 +174,7 @@ export async function POST(req: Request) {
             )
             return bot.sendMessage(
               item.telegram_chatting_id!,
-              `**[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${data.id})**\n- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`,
+              `**[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${page?.id})**\n- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`,
               { parse_mode: 'Markdown' }
             )
           }
@@ -190,7 +190,7 @@ export async function POST(req: Request) {
                 connectColor: '#da552f',
                 connectInfo: [
                   {
-                    title: `[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${data.id})`,
+                    title: `[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${page?.id})`,
                     description: `- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`
                   }
                 ]
