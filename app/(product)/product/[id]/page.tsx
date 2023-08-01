@@ -78,7 +78,7 @@ export default async function Page({ params }: Props) {
           className="mb-4 w-full rounded md:mb-10"
         />
 
-        <section className="flex gap-4 md:m-10 md:gap-5">
+        <section className="mb-4 flex flex-col gap-4 md:m-10 md:flex-row md:gap-5">
           <Image
             src={data.icon_url}
             height={48}
