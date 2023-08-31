@@ -63,6 +63,16 @@ export default async function Page({ params }: Props) {
       price: data.pricing
     }
   }
+
+  function addRefParameterToURL(url: string) {
+    const refParameter = 'ref=daily_producthunt'
+
+    if (url.includes('?')) {
+      return `${url}&${refParameter}`
+    } else {
+      return `${url}?${refParameter}`
+    }
+  }
   return (
     <>
       <script
@@ -83,7 +93,7 @@ export default async function Page({ params }: Props) {
           <div className="space-y-2">
             <h1>
               <Link
-                href={data.url + '/?ref=daily_producthunt'}
+                href={addRefParameterToURL(data.url)}
                 target="_blank"
                 className="text-2xl font-semibold text-blue-500 hover:underline"
               >
