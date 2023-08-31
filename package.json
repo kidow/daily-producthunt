@@ -21,6 +21,7 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.6",
     "fuse.js": "^6.6.2",
+    "medium-zoom": "^1.0.8",
     "next": "13.4.6",
     "node-telegram-bot-api": "^0.61.0",
     "react": "^18.2.0",

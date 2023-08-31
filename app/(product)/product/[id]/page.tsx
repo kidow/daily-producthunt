@@ -5,6 +5,7 @@ import type { WithContext, SoftwareApplication } from 'schema-dts'
 import { supabase } from 'services'
 import { CallToAction } from 'templates'
 import Image from 'next/image'
+import Cover from './cover'
 
 export const dynamic = 'force-dynamic'
 
@@ -69,14 +70,7 @@ export default async function Page({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="mx-auto max-w-4xl px-4">
-        <Image
-          src={data.cover_url}
-          width={864}
-          height={510}
-          priority
-          alt="cover image"
-          className="mb-4 w-full rounded md:mb-10"
-        />
+        <Cover url={data.cover_url} />
 
         <section className="mb-4 flex flex-col gap-4 md:m-10 md:flex-row md:gap-5">
           <Image
