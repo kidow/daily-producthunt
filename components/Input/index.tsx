@@ -51,7 +51,7 @@ const Input: FC<Props> = ({
           placeholder={placeholder}
           spellCheck={false}
         />
-        <label className="pointer-events-none absolute -top-6 left-0 max-w-[calc(100%-24px)] cursor-text select-none truncate text-sm text-slate-600 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-focus:-top-6 peer-focus:left-0 peer-focus:max-w-full peer-focus:cursor-default peer-focus:text-sm peer-focus:text-slate-400">
+        <label className="pointer-events-none absolute -top-6 left-0 max-w-[calc(100%-24px)] cursor-text select-none truncate text-sm text-neutral-600 transition-all peer-placeholder-shown:left-3 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-neutral-400 peer-focus:-top-6 peer-focus:left-0 peer-focus:max-w-full peer-focus:cursor-default peer-focus:text-sm peer-focus:text-neutral-400">
           {placeholder}
         </label>
         {suffix}

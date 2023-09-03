@@ -1,15 +1,14 @@
 'use client'
 
-import { Input, Pagination } from 'components'
+import { Pagination } from 'components'
 import { useState } from 'react'
-import type { FC } from 'react'
+import type { FC, FormEvent } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { backdrop } from 'services'
 import Link from 'next/link'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { useForm } from 'react-hook-form'
 
 dayjs.extend(relativeTime)
 
@@ -17,44 +16,56 @@ export interface Props {
   list: Database['public']['Tables']['histories']['Row'][]
   total: number | null
 }
-interface State {
-  search: string
-}
 
 const Products: FC<Props> = (props) => {
-  const { register, handleSubmit } = useForm<State>()
   const [list, setList] = useState<
     Database['public']['Tables']['histories']['Row'][]
   >(props.list || [])
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(props.total || 0)
+  const [search, setSearch] = useState<string>('')
   const supabase = createClientComponentClient<Database>()
 
   const get = async (page: number = 1) => {
     backdrop(true)
-    const { data, count } = await supabase
-      .from('histories')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .range((page - 1) * 10, page * 10 - 1)
-      .limit(10)
-    backdrop(false)
 
-    setPage(page)
-    setList(data || [])
-    setTotal(count || 0)
+    if (search) {
+      const { data, count } = await supabase
+        .from('histories')
+        .select('*', { count: 'exact' })
+        .ilike('name', `%${search}%`)
+        .order('created_at', { ascending: false })
+        .range((page - 1) * 10, page * 10 - 1)
+        .limit(10)
+      setPage(page)
+      setList(data || [])
+      setTotal(count || 0)
+    } else {
+      const { data, count } = await supabase
+        .from('histories')
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range((page - 1) * 10, page * 10 - 1)
+        .limit(10)
+      setPage(page)
+      setList(data || [])
+      setTotal(count || 0)
+    }
+
+    backdrop(false)
   }
 
-  const onSearch = async (form: State) => {
-    if (!form.search) {
+  const onSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!search) {
       get()
       return
     }
     backdrop(true)
-    const { data, error, count } = await supabase
+    const { data, count } = await supabase
       .from('histories')
-      .select('*')
-      .ilike('name', `%${form.search}%`)
+      .select('*', { count: 'exact' })
+      .ilike('name', `%${search}%`)
       .order('created_at', { ascending: false })
       .range((page - 1) * 10, page * 10 - 1)
       .limit(10)
@@ -75,8 +86,13 @@ const Products: FC<Props> = (props) => {
         >
           기존 전송 내역 보기 →
         </Link>
-        <form onSubmit={handleSubmit(onSearch)}>
-          <Input placeholder="검색 (Enter)" register={register('search')} />
+        <form onSubmit={onSearch}>
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="검색 (Enter)"
+            className="rounded border border-neutral-700 bg-transparent px-3 py-2 ring-primary duration-150 focus:border-primary focus:outline-none focus:ring"
+          />
         </form>
       </div>
       <ul className="space-y-6">
