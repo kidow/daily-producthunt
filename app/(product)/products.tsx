@@ -43,7 +43,11 @@ const Products: FC<Props> = (props) => {
       <ul className="space-y-6">
         {list.map((item) => (
           <li key={item.id}>
-            <Link className="flex gap-4" href={`/product/${item.id}`}>
+            <Link
+              className="flex gap-4"
+              href={`/product/${item.id}`}
+              target="_blank"
+            >
               <img
                 src={item.icon_url}
                 alt="logo"

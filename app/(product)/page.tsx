@@ -1,7 +1,7 @@
-import { Products } from 'templates'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import Products from './products'
 
 export const dynamic = 'force-dynamic'
 

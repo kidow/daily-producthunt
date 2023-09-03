@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import type { WithContext, SoftwareApplication } from 'schema-dts'
 import { supabase } from 'services'
-import { CallToAction } from 'templates'
 import Image from 'next/image'
 import Cover from './cover'
+import CallToAction from './call-to-action'
 
 export const dynamic = 'force-dynamic'
 
