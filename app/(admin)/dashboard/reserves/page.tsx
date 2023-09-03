@@ -71,18 +71,18 @@ export default function Page() {
     setTagList(data || [])
   }
 
-  const onSubmit = async (data: State) => {
+  const onSubmit = async (form: State) => {
     backdrop(true)
     const { error } = await supabase.from('reserves').insert({
-      url: data.url,
-      name: data.name,
-      icon_url: data.iconUrl,
-      cover_url: data.coverUrl,
-      title: data.title,
-      intro: data.intro,
-      core: data.core,
-      platform: data.platform,
-      pricing: data.pricing,
+      url: form.url,
+      name: form.name,
+      icon_url: form.iconUrl,
+      cover_url: form.coverUrl,
+      title: form.title,
+      intro: form.intro,
+      core: form.core,
+      platform: form.platform,
+      pricing: form.pricing,
       tags
     })
     backdrop(false)
