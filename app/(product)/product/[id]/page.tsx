@@ -101,11 +101,23 @@ export default async function Page({ params }: Props) {
               </Link>
             </h1>
             <p className="text-lg">{data.title}</p>
-            <ul className="list-inside list-disc text-neutral-200">
-              <li className="break-keep">{data.intro}</li>
-              <li className="break-keep">{data.core}</li>
-              <li className="break-keep">{data.platform}</li>
-              <li className="break-keep">{data.pricing}</li>
+            <ul className="space-y-4 text-neutral-200">
+              <li className="break-keep">
+                <label className="text-sm text-neutral-500">한 줄 소개</label>
+                <p>{data.intro}</p>
+              </li>
+              <li className="break-keep">
+                <label className="text-sm text-neutral-500">핵심 기능</label>
+                <p>{data.core}</p>
+              </li>
+              <li className="break-keep">
+                <label className="text-sm text-neutral-500">지원 플랫폼</label>
+                <p>{data.platform}</p>
+              </li>
+              <li className="break-keep">
+                <label className="text-sm text-neutral-500">가격 정책</label>
+                <p>{data.pricing}</p>
+              </li>
             </ul>
             <ul className="flex flex-wrap gap-2 pt-2">
               {data.tags.map((tag, key) => (

@@ -99,7 +99,7 @@ const Products: FC<Props> = (props) => {
         {list.map((item) => (
           <li key={item.id}>
             <Link
-              className="flex gap-4"
+              className="group flex gap-4"
               href={`/product/${item.id}`}
               target="_blank"
             >
@@ -109,7 +109,11 @@ const Products: FC<Props> = (props) => {
                 className="h-12 w-12 rounded md:h-20 md:w-20"
               />
               <div className="space-y-0.5 md:space-y-1">
-                <h3 className="text-lg font-semibold">{item.name}</h3>
+                <h3 className="inline-block overflow-hidden text-lg font-semibold">
+                  <span className="relative block after:absolute after:bottom-1 after:left-0 after:h-1.5 after:w-full after:origin-bottom-right after:-translate-x-full after:bg-primary after:opacity-50 after:transition-transform after:duration-150 after:content-[''] after:group-hover:translate-x-0">
+                    {item.name}
+                  </span>
+                </h3>
                 <p className="break-keep text-neutral-400">{item.title}</p>
                 <ul className="flex flex-wrap items-center gap-2 pt-1">
                   {item.tags.map((tag, key) => (
