@@ -145,7 +145,7 @@ export default function Page() {
     <>
       <div className="space-y-8">
         <h2 className="text-2xl font-bold md:text-4xl">메시지 예약</h2>
-        <Card title="예약 리스트">
+        <Card title={`예약 리스트 ${reserveList.length}개`}>
           <Table
             list={reserveList}
             size="sm"
