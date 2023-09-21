@@ -9,6 +9,7 @@ import { toast, backdrop, isURL } from 'services'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { Modal } from 'containers'
+import classnames from 'classnames'
 import {
   PaperAirplaneIcon,
   PlusIcon,
@@ -281,7 +282,13 @@ export default function Page() {
                 <button
                   key={i}
                   type="button"
-                  className="group relative h-[42px] w-52 rounded border border-neutral-700 px-3 text-left ring-primary duration-150 focus:outline-none focus:ring-black"
+                  className={classnames(
+                    'group relative h-[42px] w-52 rounded border border-neutral-700 px-3 text-left ring-primary duration-150 focus:outline-none focus:ring-black',
+                    {
+                      'before:pointer-events-none before:absolute before:left-3 before:top-2 before:text-neutral-400 before:content-["태그"]':
+                        !tag
+                    }
+                  )}
                 >
                   <span>{tag}</span>
                   <div className="absolute left-0 top-12 z-10 hidden w-full bg-black group-focus-within:block">
