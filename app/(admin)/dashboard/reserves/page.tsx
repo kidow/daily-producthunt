@@ -278,37 +278,33 @@ export default function Page() {
             />
             <div className="col-span-3 flex flex-wrap items-center gap-4">
               {tags.map((tag, i) => (
-                <div key={i} className="group relative">
-                  <input
-                    value={tag}
-                    className="tw-input"
-                    placeholder={`Tag ${i + 1}`}
-                    autoComplete="off"
-                    readOnly
-                    autoFocus
-                  />
-                  {!!tagList.length && (
-                    <div className="absolute left-0 top-12 z-10 hidden w-full bg-black group-focus-within:block">
-                      <ul className="flex max-h-96 flex-wrap gap-1.5 overflow-auto overscroll-contain p-2">
-                        {tagList.map((item, key) => (
-                          <li
-                            key={key}
-                            onMouseEnter={() =>
-                              setTags([
-                                ...tags.slice(0, i),
-                                item.name,
-                                ...tags.slice(i + 1)
-                              ])
-                            }
-                            className="cursor-pointer rounded-xl border border-neutral-700 px-2 py-1 text-xs hover:border-neutral-600 hover:text-white"
-                          >
-                            {item.name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                <button
+                  key={i}
+                  type="button"
+                  className="group relative h-[42px] w-52 rounded border border-neutral-700 px-3 text-left ring-primary duration-150 focus:outline-none focus:ring-black"
+                >
+                  <span>{tag}</span>
+                  <div className="absolute left-0 top-12 z-10 hidden w-full bg-black group-focus-within:block">
+                    <ul className="flex max-h-96 flex-wrap gap-1.5 overflow-auto overscroll-contain p-2">
+                      {tagList.map((item, key) => (
+                        <li
+                          key={key}
+                          onClick={() => {
+                            ;(document.activeElement as HTMLElement).blur()
+                            setTags([
+                              ...tags.slice(0, i),
+                              item.name,
+                              ...tags.slice(i + 1)
+                            ])
+                          }}
+                          className="cursor-pointer rounded-xl border border-neutral-700 px-2 py-1 text-xs hover:border-neutral-600 hover:text-white"
+                        >
+                          {item.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </button>
               ))}
               <IconButton onClick={() => setTags([...tags, ''])}>
                 <PlusIcon />
