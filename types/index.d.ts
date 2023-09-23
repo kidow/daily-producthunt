@@ -202,3 +202,7 @@ interface Database {
     }
   }
 }
+
+type Reserve = Database['public']['Tables']['reserves']['Row']
+
+type Tag = Database['public']['Tables']['tags']['Row']

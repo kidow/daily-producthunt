@@ -1,20 +1,21 @@
 'use client'
 
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useEffect, useState } from 'react'
-import { Button, Card, IconButton, Input, Preview, Table } from 'components'
-import { toast, backdrop, isURL } from 'services'
-import { useForm } from 'react-hook-form'
-import Link from 'next/link'
-import { Modal } from 'containers'
-import classnames from 'classnames'
 import {
   PaperAirplaneIcon,
   PlusIcon,
   TrashIcon
 } from '@heroicons/react/24/outline'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Button, Card, IconButton, Input, Preview, Table } from 'components'
+import { Modal } from 'containers'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { backdrop, isURL, toast } from 'services'
+
+import Tag from './tag'
 
 dayjs.extend(localizedFormat)
 
@@ -45,14 +46,10 @@ export default function Page() {
       pricing: '가격 정책'
     }
   })
-  const [tags, setTags] = useState<string[]>(['Tag 1', 'Tag 2', 'Tag 3'])
-  const [reserveList, setReserveList] = useState<
-    Database['public']['Tables']['reserves']['Row'][]
-  >([])
+  const [tags, setTags] = useState<string[]>(['Tag 1'])
+  const [reserveList, setReserveList] = useState<Reserve[]>([])
   const [isAddTagOpen, setIsAddTagOpen] = useState(false)
-  const [tagList, setTagList] = useState<
-    Database['public']['Tables']['tags']['Row'][]
-  >([])
+  const [tagList, setTagList] = useState<Tag[]>([])
   const supabase = createClientComponentClient<Database>()
 
   const getList = async () => {
@@ -279,39 +276,14 @@ export default function Page() {
             />
             <div className="col-span-3 flex flex-wrap items-center gap-4">
               {tags.map((tag, i) => (
-                <button
+                <Tag
                   key={i}
-                  type="button"
-                  className={classnames(
-                    'group relative h-[42px] w-52 rounded border border-neutral-700 px-3 text-left ring-primary duration-150 focus:outline-none focus:ring-black',
-                    {
-                      'before:pointer-events-none before:absolute before:left-3 before:top-2 before:text-neutral-400 before:content-["태그"]':
-                        !tag
-                    }
-                  )}
-                >
-                  <span>{tag}</span>
-                  <div className="absolute left-0 top-12 z-10 hidden w-full bg-black group-focus-within:block">
-                    <ul className="flex max-h-96 flex-wrap gap-1.5 overflow-auto overscroll-contain p-2">
-                      {tagList.map((item, key) => (
-                        <li
-                          key={key}
-                          onClick={() => {
-                            ;(document.activeElement as HTMLElement).blur()
-                            setTags([
-                              ...tags.slice(0, i),
-                              item.name,
-                              ...tags.slice(i + 1)
-                            ])
-                          }}
-                          className="cursor-pointer rounded-xl border border-neutral-700 px-2 py-1 text-xs hover:border-neutral-600 hover:text-white"
-                        >
-                          {item.name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </button>
+                  tagList={tagList}
+                  value={tag}
+                  onChange={(name) =>
+                    setTags([...tags.slice(0, i), name, ...tags.slice(i + 1)])
+                  }
+                />
               ))}
               <IconButton onClick={() => setTags([...tags, ''])}>
                 <PlusIcon />
