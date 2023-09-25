@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import Navigation from './navigation'
 
 export const metadata: Metadata = {

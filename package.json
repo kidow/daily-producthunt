@@ -30,6 +30,7 @@
     "schema-dts": "^1.1.2"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/node": "^20.3.1",
     "@types/node-telegram-bot-api": "^0.61.6",
     "@types/react": "^18.2.12",
@@ -37,6 +38,7 @@
     "autoprefixer": "^10.4.14",
     "encoding": "^0.1.13",
     "postcss": "^8.4.24",
+    "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.1.3"

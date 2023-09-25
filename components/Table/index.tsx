@@ -1,8 +1,8 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import classnames from 'classnames'
 import { Spinner } from 'components'
+import type { ReactNode } from 'react'
 
 export interface Props<T> {
   list: T[]

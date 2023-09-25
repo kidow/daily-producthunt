@@ -1,7 +1,7 @@
 'use client'
 
 import { Spinner } from 'components'
-import { useState, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { FC } from 'react'
 import { createPortal } from 'react-dom'
 import { EventListener } from 'services'

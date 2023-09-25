@@ -1,9 +1,9 @@
 'use client'
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import classnames from 'classnames'
 import type { FC } from 'react'
 import { usePagination } from 'services'
-import classnames from 'classnames'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 export interface Props {
   page: number

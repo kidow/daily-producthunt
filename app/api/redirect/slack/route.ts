@@ -1,8 +1,8 @@
+import * as Sentry from '@sentry/nextjs'
 import { WebClient } from '@slack/web-api'
-import { NextResponse } from 'next/server'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import * as Sentry from '@sentry/nextjs'
+import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   const web = new WebClient(process.env.NEXT_PUBLIC_SLACK_TOKEN)

@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server'
+import { Client } from '@notionhq/client'
+import * as Sentry from '@sentry/nextjs'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { Client } from '@notionhq/client'
+import { NextResponse } from 'next/server'
 import TelegramBot from 'node-telegram-bot-api'
-import * as Sentry from '@sentry/nextjs'
 
 export async function POST(req: Request) {
   const { id } = await req.json()

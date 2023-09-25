@@ -1,8 +1,8 @@
 'use client'
 
+import classnames from 'classnames'
 import { memo } from 'react'
 import type { FC } from 'react'
-import classnames from 'classnames'
 
 export interface Props {
   value: string

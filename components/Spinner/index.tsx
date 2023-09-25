@@ -1,9 +1,9 @@
 'use client'
 
-import { memo } from 'react'
-import type { FC } from 'react'
 import classnames from 'classnames'
 import type { Argument } from 'classnames'
+import { memo } from 'react'
+import type { FC } from 'react'
 
 export interface Props {
   className?: Argument

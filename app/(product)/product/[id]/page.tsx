@@ -1,11 +1,12 @@
-import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import type { WithContext, SoftwareApplication } from 'schema-dts'
-import { supabase } from 'services'
 import Image from 'next/image'
-import Cover from './cover'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import type { SoftwareApplication, WithContext } from 'schema-dts'
+import { supabase } from 'services'
+
 import CallToAction from './call-to-action'
+import Cover from './cover'
 
 export const dynamic = 'force-dynamic'
 

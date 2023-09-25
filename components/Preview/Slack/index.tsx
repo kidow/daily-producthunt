@@ -1,9 +1,9 @@
 'use client'
 
+import classnames from 'classnames'
 import Link from 'next/link'
 import { memo } from 'react'
 import type { FC } from 'react'
-import classnames from 'classnames'
 import { isURL } from 'services'
 
 export interface Props {

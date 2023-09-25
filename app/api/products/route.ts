@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import { Client } from '@notionhq/client'
+import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   const url = new URL(req.url)

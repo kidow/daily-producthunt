@@ -65,10 +65,14 @@ const DiscordPreview: FC<Props> = ({
               </ul>
               <div className="text-sm">{tags.join(', ')}</div>
             </div>
-            {!!iconUrl && <img src={iconUrl} alt="Logo" className="h-20 w-20 rounded" />}
+            {!!iconUrl && (
+              <img src={iconUrl} alt="Logo" className="h-20 w-20 rounded" />
+            )}
           </div>
           <div className="mt-4">
-            {!!coverUrl && <img src={coverUrl} alt="Cover image" className="rounded" />}
+            {!!coverUrl && (
+              <img src={coverUrl} alt="Cover image" className="rounded" />
+            )}
           </div>
         </article>
       </div>

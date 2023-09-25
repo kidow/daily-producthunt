@@ -1,13 +1,13 @@
 'use client'
 
+import { XMarkIcon } from '@heroicons/react/20/solid'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Button } from 'components'
+import { Modal } from 'containers'
+import Fuse from 'fuse.js'
 import { useEffect, useMemo, useState } from 'react'
 import type { FC, FormEvent } from 'react'
-import { Modal } from 'containers'
 import { backdrop, toast } from 'services'
-import { Button } from 'components'
-import { XMarkIcon } from '@heroicons/react/20/solid'
-import Fuse from 'fuse.js'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export interface Props extends ModalProps {
   onComplete?: () => void

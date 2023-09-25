@@ -1,10 +1,10 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { backdrop, toast } from 'services'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { backdrop, toast } from 'services'
 
 interface State {
   email: string

@@ -1,7 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import mediumZoom from 'medium-zoom'
+import Image from 'next/image'
 import { useEffect } from 'react'
 
 interface Props {

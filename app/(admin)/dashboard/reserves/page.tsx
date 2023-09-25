@@ -48,8 +48,11 @@ export default function Page() {
   })
   const [tags, setTags] = useState<string[]>(['Tag 1'])
   const [reserveList, setReserveList] = useState<Reserve[]>([])
-  const [isAddTagOpen, setIsAddTagOpen] = useState(false)
+  const [isAddTagOpen, setIsAddTagOpen] = useState<boolean>(false)
   const [tagList, setTagList] = useState<Tag[]>([])
+  const [isReserveOpen, setIsReserveOpen] = useState<boolean>(false)
+  const [id, setId] = useState<number>(0)
+
   const supabase = createClientComponentClient<Database>()
 
   const getList = async () => {
@@ -177,7 +180,11 @@ export default function Page() {
                   <img
                     src={item.icon_url}
                     alt=""
-                    className="h-[88px] w-[88px] rounded-lg"
+                    className="h-[88px] w-[88px] cursor-pointer rounded-lg"
+                    onClick={() => {
+                      setIsReserveOpen(true)
+                      setId(item.id)
+                    }}
                   />
                 </td>
                 <td>
@@ -350,6 +357,17 @@ export default function Page() {
           isOpen={isAddTagOpen}
           onClose={() => setIsAddTagOpen(false)}
           onComplete={getTags}
+        />
+      )}
+      {isReserveOpen && (
+        <Modal.Reserve
+          isOpen={isReserveOpen}
+          onClose={() => {
+            setIsReserveOpen(false)
+            setId(0)
+          }}
+          id={id}
+          onComplete={getList}
         />
       )}
     </>

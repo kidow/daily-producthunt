@@ -1,16 +1,16 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import type { FC } from 'react'
-import { EventListener } from 'services'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import {
   CheckCircleIcon,
-  InformationCircleIcon,
   ExclamationCircleIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
+  InformationCircleIcon
 } from '@heroicons/react/24/solid'
+import { useCallback, useEffect, useState } from 'react'
+import type { FC } from 'react'
 import { createPortal } from 'react-dom'
+import { EventListener } from 'services'
 
 export interface Props {}
 interface State {}

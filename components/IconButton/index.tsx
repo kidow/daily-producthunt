@@ -3,7 +3,7 @@
 import classnames from 'classnames'
 import type { Argument } from 'classnames'
 import { cloneElement, useMemo } from 'react'
-import type { FC, ReactElement, MouseEventHandler } from 'react'
+import type { FC, MouseEventHandler, ReactElement } from 'react'
 
 export interface Props extends ReactProps {
   className?: Argument

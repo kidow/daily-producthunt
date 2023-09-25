@@ -5,5 +5,16 @@
   "tabWidth": 2,
   "trailingComma": "none",
   "printWidth": 80,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^components/(.*)$",
+    "^services/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "@trivago/prettier-plugin-sort-imports"
+  ]
 }

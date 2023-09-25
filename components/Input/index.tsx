@@ -1,10 +1,10 @@
 'use client'
 
+import classnames from 'classnames'
+import type { Argument } from 'classnames'
 import { useId } from 'react'
 import type { FC, HTMLInputTypeAttribute, ReactNode } from 'react'
 import type { UseFormRegisterReturn } from 'react-hook-form'
-import classnames from 'classnames'
-import type { Argument } from 'classnames'
 
 export interface Props {
   register: UseFormRegisterReturn
