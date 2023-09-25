@@ -6,18 +6,20 @@ import {
   TrashIcon
 } from '@heroicons/react/24/outline'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Button, Card, IconButton, Input, Preview, Table } from 'components'
+import {
+  Button,
+  Card,
+  IconButton,
+  Input,
+  Preview,
+  Table,
+  Tag
+} from 'components'
 import { Modal } from 'containers'
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { backdrop, isURL, toast } from 'services'
-
-import Tag from './tag'
-
-dayjs.extend(localizedFormat)
 
 interface State {
   url: string
@@ -217,7 +219,12 @@ export default function Page() {
                 <td>{item.core}</td>
                 <td>{item.platform}</td>
                 <td>{item.pricing}</td>
-                <td>{dayjs(item.created_at).locale('ko').format('L LT')}</td>
+                <td>
+                  {new Intl.DateTimeFormat('ko', {
+                    dateStyle: 'medium',
+                    timeStyle: 'medium'
+                  }).format(new Date(item.created_at))}
+                </td>
               </tr>
             )}
           />
@@ -368,6 +375,7 @@ export default function Page() {
           }}
           id={id}
           onComplete={getList}
+          tagList={tagList}
         />
       )}
     </>

@@ -2,12 +2,8 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Pagination, Table } from 'components'
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'services'
-
-dayjs.extend(localizedFormat)
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -77,7 +73,9 @@ export default function Page() {
                 <td rowSpan={2}>{item.telegram_chatting_id}</td>
                 <td rowSpan={2}>{item.jandi_webhook_url}</td>
                 <td rowSpan={2}>
-                  {dayjs(item.created_at).locale('ko').format('L LT')}
+                  {new Intl.DateTimeFormat('ko', { dateStyle: 'long' }).format(
+                    new Date(item.created_at)
+                  )}
                 </td>
               </tr>
               <tr>
