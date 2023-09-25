@@ -1,8 +1,8 @@
 'use client'
 
-import classnames from 'classnames'
 import { Spinner } from 'components'
 import type { ReactNode } from 'react'
+import { cn } from 'services'
 
 export interface Props<T> {
   list: T[]
@@ -21,7 +21,7 @@ function Table<T>({
 }: Props<T>) {
   return (
     <div
-      className={classnames(
+      className={cn(
         'relative',
         loading ? 'cursor-progress overflow-hidden' : 'overflow-auto'
       )}
@@ -30,7 +30,7 @@ function Table<T>({
         <Spinner className="absolute left-1/2 top-1/2 z-[12] h-6 w-6 text-neutral-200" />
       )}
       <table
-        className={classnames(
+        className={cn(
           'tw-table w-full border-collapse whitespace-nowrap text-center text-xs text-neutral-500 dark:text-neutral-50',
           {
             'pointer-events-none select-none opacity-60': loading,

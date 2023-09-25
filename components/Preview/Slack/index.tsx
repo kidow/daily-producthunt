@@ -1,10 +1,9 @@
 'use client'
 
-import classnames from 'classnames'
 import Link from 'next/link'
 import { memo } from 'react'
 import type { FC } from 'react'
-import { isURL } from 'services'
+import { cn, isURL } from 'services'
 
 export interface Props {
   url: string
@@ -49,7 +48,7 @@ const SlackPreview: FC<Props> = ({
           <Link
             href={url}
             target="_blank"
-            className={classnames('cursor-pointer hover:underline', {
+            className={cn('cursor-pointer hover:underline', {
               'text-[#1d9bd1]': isURL(url)
             })}
           >

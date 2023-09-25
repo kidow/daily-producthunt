@@ -1,7 +1,7 @@
 'use client'
 
-import classnames from 'classnames'
 import { useEffect, useRef } from 'react'
+import { cn } from 'services'
 
 interface Props {
   value: string
@@ -19,7 +19,7 @@ export default function Tag({ value, onChange, tagList }: Props): JSX.Element {
     <button
       ref={ref}
       type="button"
-      className={classnames(
+      className={cn(
         'ring-primary group relative h-[42px] w-52 rounded border border-neutral-700 px-3 text-left duration-150 focus:outline-none focus:ring-black',
         {
           'before:pointer-events-none before:absolute before:left-3 before:top-2 before:text-neutral-400 before:content-["태그"]':

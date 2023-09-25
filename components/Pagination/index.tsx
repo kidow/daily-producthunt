@@ -1,9 +1,8 @@
 'use client'
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import classnames from 'classnames'
 import type { FC } from 'react'
-import { usePagination } from 'services'
+import { cn, usePagination } from 'services'
 
 export interface Props {
   page: number
@@ -35,7 +34,7 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
   return (
     <ul className="inline-flex select-none text-sm font-medium">
       <li
-        className={classnames(
+        className={cn(
           'inline-flex h-9 w-9 select-none items-center justify-center rounded-full',
           page === 1
             ? 'cursor-not-allowed text-neutral-500'
@@ -59,7 +58,7 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
 
         return (
           <li
-            className={classnames(
+            className={cn(
               'inline-flex h-9 w-9 cursor-pointer select-none items-center justify-center rounded-full',
               pageNumber === page
                 ? 'font-semibold text-blue-500'
@@ -76,7 +75,7 @@ const Pagination: FC<Props> = ({ page, total, size, onChange }) => {
         )
       })}
       <li
-        className={classnames(
+        className={cn(
           'inline-flex h-9 w-9 select-none items-center justify-center rounded-full',
           total < page * size
             ? 'cursor-not-allowed text-neutral-500'

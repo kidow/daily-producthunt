@@ -32,9 +32,9 @@ const AddTagModal: FC<Props> = ({ isOpen, onClose, onComplete }) => {
 
   const add = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    backdrop(true)
+    backdrop.open()
     await supabase.from('tags').insert({ name })
-    backdrop(false)
+    backdrop.close()
     setName('')
     get()
     if (onComplete) onComplete()
@@ -42,9 +42,9 @@ const AddTagModal: FC<Props> = ({ isOpen, onClose, onComplete }) => {
 
   const remove = async (id: number) => {
     if (!window.confirm('삭제하겠습니까?')) return
-    backdrop(true)
+    backdrop.open()
     await supabase.from('tags').delete().eq('id', id)
-    backdrop(false)
+    backdrop.close()
     get()
   }
 

@@ -1,19 +1,18 @@
 'use client'
 
-import classnames from 'classnames'
-import type { Argument } from 'classnames'
 import { memo } from 'react'
 import type { FC } from 'react'
+import { cn } from 'services'
 
 export interface Props {
-  className?: Argument
+  className?: string
 }
 interface State {}
 
 const Spinner: FC<Props> = ({ className }) => {
   return (
     <svg
-      className={classnames('animate-spin', className)}
+      className={cn('animate-spin', className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

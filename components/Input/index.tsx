@@ -1,10 +1,9 @@
 'use client'
 
-import classnames from 'classnames'
-import type { Argument } from 'classnames'
 import { useId } from 'react'
 import type { FC, HTMLInputTypeAttribute, ReactNode } from 'react'
 import type { UseFormRegisterReturn } from 'react-hook-form'
+import { cn } from 'services'
 
 export interface Props {
   register: UseFormRegisterReturn
@@ -14,7 +13,7 @@ export interface Props {
   placeholder?: string
   fullWidth?: boolean
   float?: boolean
-  className?: Argument
+  className?: string
 }
 interface State {}
 
@@ -30,18 +29,16 @@ const Input: FC<Props> = ({
 }) => {
   const id = useId()
   return (
-    <div
-      className={classnames('inline-block', { 'w-full': fullWidth }, className)}
-    >
+    <div className={cn('inline-block', { 'w-full': fullWidth }, className)}>
       <div
-        className={classnames(
+        className={cn(
           'rounded border border-neutral-700 px-3 py-2 ring-primary duration-150 focus-within:ring focus:border-primary',
           { 'w-full': fullWidth, relative: !!placeholder }
         )}
       >
         <input
           {...register}
-          className={classnames('w-full bg-transparent focus:outline-none', {
+          className={cn('w-full bg-transparent focus:outline-none', {
             'peer placeholder-transparent': !!placeholder && float
           })}
           id={id}

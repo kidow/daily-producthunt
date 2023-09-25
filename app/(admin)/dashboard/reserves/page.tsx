@@ -73,7 +73,7 @@ export default function Page() {
   }
 
   const onSubmit = async (form: State) => {
-    backdrop(true)
+    backdrop.open()
     const { error } = await supabase.from('reserves').insert({
       url: form.url,
       name: form.name,
@@ -86,7 +86,7 @@ export default function Page() {
       pricing: form.pricing,
       tags
     })
-    backdrop(false)
+    backdrop.close()
     if (error) {
       toast.error('메시지 예약 에러')
       console.error(error)
@@ -99,9 +99,9 @@ export default function Page() {
 
   const removeReserve = async (id: number) => {
     if (!window.confirm('삭제하시겠습니까?')) return
-    backdrop(true)
+    backdrop.open()
     const { error } = await supabase.from('reserves').delete().eq('id', id)
-    backdrop(false)
+    backdrop.close()
     if (error) {
       toast.error('실패했습니다.')
       console.error(error)
@@ -112,7 +112,7 @@ export default function Page() {
 
   const sendMessage = async (id: number) => {
     if (!window.confirm('전송하시겠습니까?')) return
-    backdrop(true)
+    backdrop.open()
     try {
       const res = await fetch('/api/send-message', {
         method: 'POST',
@@ -130,7 +130,7 @@ export default function Page() {
     } catch (err) {
       console.log(err)
     } finally {
-      backdrop(false)
+      backdrop.close()
     }
   }
 

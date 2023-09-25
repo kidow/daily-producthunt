@@ -2,14 +2,13 @@
 
 import { memo } from 'react'
 import type { FC, MouseEventHandler } from 'react'
-import classnames from 'classnames'
-import type { Argument } from 'classnames'
+import { cn } from 'services'
 
 export interface Props {
   text?: string
   type?: 'button' | 'reset' | 'submit'
   onClick?: MouseEventHandler<HTMLButtonElement>
-  className?: Argument
+  className?: string
   disabled?: boolean
 }
 interface State {}
@@ -26,7 +25,7 @@ const Button: FC<Props> = ({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className={classnames(
+      className={cn(
         'rounded-md border border-transparent bg-primary px-3.5 py-2 font-medium duration-150 focus:outline-none disabled:cursor-not-allowed disabled:bg-neutral-500',
         className
       )}

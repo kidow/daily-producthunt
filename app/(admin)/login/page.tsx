@@ -25,14 +25,14 @@ export default function Page() {
 
   const onLogin = async ({ email, code }: State) => {
     if (email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) return
-    backdrop(true)
+    backdrop.open()
     if (isOtpSent) {
       const { error } = await supabase.auth.verifyOtp({
         type: 'magiclink',
         token: code,
         email
       })
-      backdrop(false)
+      backdrop.close()
       if (error) {
         toast.error('verifyOtp 에러')
         console.error(error)
@@ -42,7 +42,7 @@ export default function Page() {
       push(redirectUrl || '/dashboard')
     } else {
       const { error } = await supabase.auth.signInWithOtp({ email })
-      backdrop(false)
+      backdrop.close()
       if (error) {
         toast.error('signInWithOtp 에러')
         console.error(error)

@@ -27,7 +27,7 @@ const Products: FC<Props> = (props) => {
   const supabase = createClientComponentClient<Database>()
 
   const get = async (page: number = 1) => {
-    backdrop(true)
+    backdrop.open()
 
     if (search) {
       const { data, count } = await supabase
@@ -52,7 +52,7 @@ const Products: FC<Props> = (props) => {
       setTotal(count || 0)
     }
 
-    backdrop(false)
+    backdrop.close()
   }
 
   const onSearch = async (e: FormEvent<HTMLFormElement>) => {
@@ -61,7 +61,7 @@ const Products: FC<Props> = (props) => {
       get()
       return
     }
-    backdrop(true)
+    backdrop.open()
     const { data, count } = await supabase
       .from('histories')
       .select('*', { count: 'exact' })
@@ -69,7 +69,7 @@ const Products: FC<Props> = (props) => {
       .order('created_at', { ascending: false })
       .range((page - 1) * 10, page * 10 - 1)
       .limit(10)
-    backdrop(false)
+    backdrop.close()
 
     setPage(1)
     setList(data || [])

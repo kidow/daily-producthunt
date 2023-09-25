@@ -1,6 +1,17 @@
+import { type ClassValue, clsx } from 'clsx'
 import { EventListener } from 'services'
+import { twMerge } from 'tailwind-merge'
 
-export const backdrop = (open: boolean) => EventListener.emit('backdrop', open)
+class Backdrop {
+  open() {
+    EventListener.emit('backdrop', true)
+  }
+  close() {
+    EventListener.emit('backdrop', false)
+  }
+}
+
+export const backdrop = new Backdrop()
 
 class Toast {
   private emit(message: string, type: NToast.Type) {
@@ -33,4 +44,8 @@ export function isURL(url: string) {
     'i'
   ) // fragment locator
   return !!pattern.test(url)
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

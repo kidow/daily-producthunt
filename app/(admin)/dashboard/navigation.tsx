@@ -1,11 +1,11 @@
 'use client'
 
 import { Bars3Icon } from '@heroicons/react/24/solid'
-import classnames from 'classnames'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { memo, useMemo, useState } from 'react'
 import type { FC } from 'react'
+import { cn } from 'services'
 
 export interface Props {}
 interface State {}
@@ -26,7 +26,7 @@ const Navigation: FC<Props> = () => {
   return (
     <>
       <aside
-        className={classnames(
+        className={cn(
           'fixed left-0 top-0 z-10 h-screen w-72 border-r border-neutral-700 transition duration-150 md:static',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
@@ -37,7 +37,7 @@ const Navigation: FC<Props> = () => {
               <li key={key}>
                 <Link
                   href={item.href}
-                  className={classnames(
+                  className={cn(
                     'block rounded-lg px-4 py-1.5 font-semibold duration-150 hover:bg-neutral-800',
                     { 'text-primary': pathname === item.href }
                   )}

@@ -1,10 +1,10 @@
 'use client'
 
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import { useEffect } from 'react'
 import type { FC } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import classnames from 'classnames'
 import { createPortal } from 'react-dom'
+import { cn } from 'services'
 
 import AddTagModal from './AddTag'
 import ReserveModal from './Reserve'
@@ -56,7 +56,7 @@ const Modal: FC<Props> = ({
           &#8203;
         </span>
         <div
-          className={classnames(
+          className={cn(
             'my-8 inline-block w-full transform overflow-hidden rounded-lg text-left align-middle shadow-xl transition-all',
             maxWidth
           )}
@@ -78,7 +78,7 @@ const Modal: FC<Props> = ({
             </div>
           </header>
           <div
-            className={classnames('bg-neutral-800', {
+            className={cn('bg-neutral-800', {
               'px-7 py-6': padding,
               'rounded-b-lg': !footer
             })}
