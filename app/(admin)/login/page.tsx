@@ -21,7 +21,7 @@ export default function Page() {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((event, session) => {
       const redirectUrl = searchParams.get('redirectUrl')
-      if (session?.user.email?.startsWith('wcgo2ling@')) {
+      if (session?.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
         push(redirectUrl || '/dashboard')
       }
     })
