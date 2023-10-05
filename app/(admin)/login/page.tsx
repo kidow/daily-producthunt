@@ -1,12 +1,13 @@
 'use client'
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function Page() {
   const supabase = createClientComponentClient<Database>()
   const { push } = useRouter()
+  const searchParams = useSearchParams()
 
   const googleLogin = async () => {
     await supabase.auth.signInWithOAuth({
@@ -19,7 +20,10 @@ export default function Page() {
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('session', session)
+      const redirectUrl = searchParams.get('redirectUrl')
+      if (session?.user.email?.startsWith('wcgo2ling@')) {
+        push(redirectUrl || '/dashboard')
+      }
     })
     return () => {
       subscription.unsubscribe()

@@ -8,9 +8,8 @@ export async function middleware(req: NextRequest) {
   const {
     data: { user }
   } = await supabase.auth.getUser()
-  console.log('user.email', user?.email)
 
-  if (!user || user.email !== 'wcgo2ling@gmail.com') {
+  if (!user || !user.email?.startsWith('wcgo2ling@')) {
     const redirectUrl = req.nextUrl.clone()
     redirectUrl.pathname = '/login'
     redirectUrl.searchParams.set('redirectUrl', req.nextUrl.pathname)
