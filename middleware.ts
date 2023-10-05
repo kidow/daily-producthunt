@@ -8,6 +8,7 @@ export async function middleware(req: NextRequest) {
   const {
     data: { user }
   } = await supabase.auth.getUser()
+  console.log('user.email', user?.email)
 
   if (!user || user.email !== 'wcgo2ling@gmail.com') {
     const redirectUrl = req.nextUrl.clone()
