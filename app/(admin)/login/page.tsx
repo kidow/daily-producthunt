@@ -10,7 +10,7 @@ export default function Page() {
 
   const googleLogin = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: 'discord',
       options: { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/login` }
     })
   }
@@ -19,7 +19,7 @@ export default function Page() {
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) push('/dashboard')
+      console.log('session', session)
     })
     return () => {
       subscription.unsubscribe()
