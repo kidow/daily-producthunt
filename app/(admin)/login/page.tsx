@@ -10,8 +10,7 @@ export default function Page() {
 
   const googleLogin = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'discord',
-      options: { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/login` }
+      provider: 'discord'
     })
   }
 
