@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { SoftwareApplication, WithContext } from 'schema-dts'
@@ -84,7 +83,7 @@ export default async function Page({ params }: Props) {
         <Cover url={data.cover_url} />
 
         <section className="mb-4 flex flex-col gap-4 md:m-10 md:flex-row md:gap-5">
-          <Image
+          <img
             src={data.icon_url}
             height={48}
             width={48}

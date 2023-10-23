@@ -1,7 +1,6 @@
 'use client'
 
 import mediumZoom from 'medium-zoom'
-import Image from 'next/image'
 import { useEffect } from 'react'
 
 interface Props {
@@ -13,13 +12,12 @@ export default function Cover({ url }: Props) {
     mediumZoom('[data-zoomable]', { background: 'rgba(0,0,0,0.5)' })
   }, [])
   return (
-    <Image
+    <img
       src={url}
       data-zoomable
       alt="cover image"
       width={864}
       height={510}
-      priority
       className="mb-4 w-full rounded md:mb-10"
     />
   )
