@@ -1,10 +1,9 @@
 'use client'
 
-import * as Sentry from '@sentry/nextjs'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useParams } from 'next/navigation'
 import { useMemo, useState } from 'react'
-import { IS_DEV, cn } from 'services'
+import { cn } from 'services'
 
 interface Props {
   list: string[]
@@ -26,7 +25,7 @@ export default function Like({ ip, ...props }: Props): JSX.Element {
         .insert({ product_id: params.id as string, ip_address: ip })
         .select(`*`)
       if (error) {
-        if (!IS_DEV) Sentry.captureException(error)
+        console.error(error)
         return
       }
       setIsAnimated(true)
@@ -36,7 +35,7 @@ export default function Like({ ip, ...props }: Props): JSX.Element {
         .delete()
         .eq('ip_address', ip)
       if (error) {
-        if (!IS_DEV) Sentry.captureException(error)
+        console.error(error)
         return
       }
     }

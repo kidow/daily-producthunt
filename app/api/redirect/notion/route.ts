@@ -1,8 +1,6 @@
-import * as Sentry from '@sentry/nextjs'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { IS_DEV } from 'services'
 
 export async function GET(req: Request) {
   const url = new URL(req.url)
@@ -43,7 +41,6 @@ export async function GET(req: Request) {
   })
   if (error) {
     console.log(error)
-    if (!IS_DEV) Sentry.captureException(error)
   }
 
   return NextResponse.json({

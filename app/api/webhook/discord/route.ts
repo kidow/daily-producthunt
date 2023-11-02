@@ -1,8 +1,6 @@
-import * as Sentry from '@sentry/nextjs'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { IS_DEV } from 'services'
 
 export async function POST(req: Request) {
   const { webhookUrl } = await req.json()
@@ -28,7 +26,6 @@ export async function POST(req: Request) {
     .insert({ discord_webhook_url: webhookUrl })
   if (error) {
     console.log(error)
-    if (!IS_DEV) Sentry.captureException(error)
     return NextResponse.json({
       success: false,
       message:
@@ -52,7 +49,6 @@ export async function POST(req: Request) {
     })
   } catch (err) {
     console.log(err)
-    if (!IS_DEV) Sentry.captureException(err)
     return NextResponse.json({
       success: false,
       message:

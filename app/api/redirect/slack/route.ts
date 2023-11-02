@@ -1,9 +1,7 @@
-import * as Sentry from '@sentry/nextjs'
 import { WebClient } from '@slack/web-api'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { IS_DEV } from 'services'
 
 export async function GET(req: Request) {
   const web = new WebClient(process.env.NEXT_PUBLIC_SLACK_TOKEN)
@@ -27,7 +25,7 @@ export async function GET(req: Request) {
     .from('connections')
     .insert({ slack_webhook_url: incoming_webhook?.url })
   if (error) {
-    if (!IS_DEV) Sentry.captureException(error)
+    console.error(error)
   }
 
   return NextResponse.json({ success: true, message: '통합이 완료되었습니다.' })

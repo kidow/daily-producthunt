@@ -1,8 +1,6 @@
-import * as Sentry from '@sentry/nextjs'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { IS_DEV } from 'services'
 
 export async function POST(req: Request) {
   const { webhookUrl } = await req.json()
@@ -17,7 +15,6 @@ export async function POST(req: Request) {
     .insert({ jandi_webhook_url: webhookUrl })
   if (error) {
     console.log(error)
-    if (!IS_DEV) Sentry.captureException(error)
     return NextResponse.json({
       success: false,
       message:
