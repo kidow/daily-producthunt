@@ -6,7 +6,7 @@ import { cn } from 'services'
 interface Props {
   value: string
   onChange: (value: string) => void
-  tagList: Tag[]
+  tagList: Table.Tag[]
 }
 
 export default function Tag({ value, onChange, tagList }: Props): JSX.Element {

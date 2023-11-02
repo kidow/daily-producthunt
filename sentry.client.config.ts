@@ -25,5 +25,6 @@ Sentry.init({
       maskAllText: true,
       blockAllMedia: true
     })
-  ]
+  ],
+  environment: process.env.NODE_ENV
 })

@@ -11,7 +11,7 @@ import { backdrop, toast } from 'services'
 export interface Props extends ModalProps {
   onComplete: () => void
   id: number
-  tagList: Tag[]
+  tagList: Table.Tag[]
 }
 interface State {
   url: string

@@ -190,6 +190,26 @@ interface Database {
           created_at?: string
         }
       }
+      likes: {
+        Row: {
+          id: number
+          created_at: string
+          ip_address: string
+          product_id: string
+        }
+        Insert: {
+          id?: number
+          created_at?: string
+          ip_address?: string
+          product_id?: string
+        }
+        Update: {
+          id?: number
+          created_at?: string
+          ip_address?: string
+          product_id?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -203,6 +223,8 @@ interface Database {
   }
 }
 
-type Reserve = Database['public']['Tables']['reserves']['Row']
-
-type Tag = Database['public']['Tables']['tags']['Row']
+namespace Table {
+  type Reserve = Database['public']['Tables']['reserves']['Row']
+  type Tag = Database['public']['Tables']['tags']['Row']
+  type Like = Database['public']['Tables']['likes']['Row']
+}

@@ -4,6 +4,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import TelegramBot from 'node-telegram-bot-api'
+import { IS_DEV } from 'services'
 
 export async function POST(req: Request) {
   const { id } = await req.json()
@@ -254,7 +255,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, data: [] })
   } catch (err) {
     console.log(err)
-    Sentry.captureException(err)
+    if (!IS_DEV) Sentry.captureException(err)
     return NextResponse.json({
       success: false,
       data: err,

@@ -49,9 +49,9 @@ export default function Page() {
     }
   })
   const [tags, setTags] = useState<string[]>(['Tag 1'])
-  const [reserveList, setReserveList] = useState<Reserve[]>([])
+  const [reserveList, setReserveList] = useState<Table.Reserve[]>([])
   const [isAddTagOpen, setIsAddTagOpen] = useState<boolean>(false)
-  const [tagList, setTagList] = useState<Tag[]>([])
+  const [tagList, setTagList] = useState<Table.Tag[]>([])
   const [isReserveOpen, setIsReserveOpen] = useState<boolean>(false)
   const [id, setId] = useState<number>(0)
 

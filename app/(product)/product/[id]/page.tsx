@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { SoftwareApplication, WithContext } from 'schema-dts'
@@ -6,8 +7,11 @@ import { supabase } from 'services'
 
 import CallToAction from './call-to-action'
 import Cover from './cover'
+import Like from './like'
 
 export const dynamic = 'force-dynamic'
+
+export const runtime = 'edge'
 
 interface Props {
   params: {
@@ -45,14 +49,18 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: Props) {
+  const ip = headers().get('x-real-ip')
   const { data } = await supabase
     .from('histories')
-    .select('*')
+    .select(
+      `
+      *,
+      likes (*)
+    `
+    )
     .eq('id', params.id)
     .single()
-  if (!data) {
-    notFound()
-  }
+  if (!data) notFound()
   const jsonLd: WithContext<SoftwareApplication> = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -83,14 +91,17 @@ export default async function Page({ params }: Props) {
         <Cover url={data.cover_url} />
 
         <section className="mb-4 flex flex-col gap-4 md:m-10 md:flex-row md:gap-5">
-          <img
-            src={data.icon_url}
-            height={48}
-            width={48}
-            alt="logo"
-            className="rounded md:h-20 md:w-20"
-          />
-          <div className="space-y-2">
+          <div className="sm:space-y-4 flex sm:block items-center justify-between">
+            <img
+              src={data.icon_url}
+              height={50}
+              width={50}
+              alt="logo"
+              className="rounded md:h-20 md:w-20"
+            />
+            <Like list={data.likes.map((item) => item.ip_address)} ip={ip} />
+          </div>
+          <div className="space-y-2 flex-1">
             <h1>
               <Link
                 href={addRefParameterToURL(data.url)}
