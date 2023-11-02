@@ -9,8 +9,6 @@ import CallToAction from './call-to-action'
 import Cover from './cover'
 import Like from './like'
 
-export const dynamic = 'force-dynamic'
-
 export const runtime = 'edge'
 
 interface Props {
