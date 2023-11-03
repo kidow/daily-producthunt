@@ -1,18 +1,11 @@
-'use client'
+import { redirect } from 'next/navigation'
 
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+interface Props {
+  searchParams: {
+    id: string
+  }
+}
 
-export default function Page() {
-  const { replace } = useRouter()
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
-
-  useEffect(() => {
-    if (id) {
-      replace(`/product/${id}` + '?ref=daily_producthunt')
-    }
-  }, [])
-  return <>링크 이동 중...</>
+export default function Page({ searchParams }: Props) {
+  redirect(`/product/${searchParams.id}`)
 }
