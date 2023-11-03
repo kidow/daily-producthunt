@@ -227,4 +227,5 @@ namespace Table {
   type Reserve = Database['public']['Tables']['reserves']['Row']
   type Tag = Database['public']['Tables']['tags']['Row']
   type Like = Database['public']['Tables']['likes']['Row']
+  type History = Database['public']['Tables']['histories']['Row']
 }

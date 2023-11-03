@@ -1,7 +1,12 @@
 import { Header } from 'containers'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
-export default function RootLayout({ children }: ReactProps) {
+interface Props extends ReactProps {
+  modal: ReactNode
+}
+
+export default function RootLayout({ children, modal }: Props) {
   return (
     <>
       <Header />
@@ -20,6 +25,7 @@ export default function RootLayout({ children }: ReactProps) {
           개인정보처리방침
         </Link>
       </footer>
+      {modal}
     </>
   )
 }

@@ -13,12 +13,14 @@ interface Props {
 export default function Like({ ip, ...props }: Props): JSX.Element {
   const supabase = createClientComponentClient<Database>()
   const [list, setList] = useState<string[]>(props.list || [])
-  const [isAnimated, setIsAnimated] = useState(false)
+  const [isAnimated, setIsAnimated] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const params = useParams()
 
   const onClick = async () => {
-    if (!ip) return
+    if (!ip || isLoading) return
 
+    setIsLoading(true)
     if (list.indexOf(ip || '') === -1) {
       const { error } = await supabase
         .from('likes')
@@ -44,6 +46,7 @@ export default function Like({ ip, ...props }: Props): JSX.Element {
       .from('likes')
       .select(`*`)
       .eq('product_id', params.id)
+    setIsLoading(false)
     setList(data?.map((item) => item.ip_address) || [])
   }
 

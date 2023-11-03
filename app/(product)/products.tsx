@@ -101,7 +101,7 @@ const Products: FC<Props> = (props) => {
             <Link
               className="group flex gap-4"
               href={`/product/${item.id}`}
-              target="_blank"
+              scroll={false}
             >
               <img
                 src={item.icon_url}
