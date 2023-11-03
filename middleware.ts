@@ -19,10 +19,9 @@ export async function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith('/api/post')) {
-    const origin = req.headers.get('origin')
     res.headers.set(
       'Access-Control-Allow-Origin',
-      origin || process.env.NEXT_PUBLIC_BASE_URL
+      'https://daily-producthunt.kidow.me'
     )
   }
 
