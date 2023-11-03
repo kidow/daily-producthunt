@@ -1,7 +1,6 @@
 'use client'
 
 import { Dialog, Transition } from '@headlessui/react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Post } from 'containers'
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect } from 'react'
@@ -14,27 +13,26 @@ interface Props {
 }
 interface State {
   data: (Table.History & { likes: string[] }) | null
+  ip: string | null
 }
 
 export default function Page({ params }: Props): JSX.Element {
   const { back } = useRouter()
-  const supabase = createClientComponentClient<Database>()
-  const [{ data }, setState] = useObjectState<State>({ data: null })
+  const [{ data, ip }, setState] = useObjectState<State>({
+    data: null,
+    ip: null
+  })
 
   const get = async () => {
-    const { data } = await supabase
-      .from('histories')
-      .select(
-        `
-        *,
-        likes (*)
-    `
-      )
-      .eq('id', params.id)
-      .single()
+    const res = await fetch(`/api/post?id=${params.id}`)
+    const { data, ip } = await res.json()
     if (!data) return
     setState({
-      data: { ...data, likes: data.likes.map((item) => item.ip_address) || [] }
+      data: {
+        ...data,
+        likes: data?.likes?.map((item: Table.Like) => item.ip_address) || []
+      },
+      ip
     })
   }
 
@@ -67,7 +65,16 @@ export default function Page({ params }: Props): JSX.Element {
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
               <Dialog.Panel className="w-full scale-100 transform overflow-hidden rounded-2xl bg-neutral-900 p-4 text-left align-middle opacity-100 shadow-xl transition-all max-w-4xl">
-                {data ? <Post ip={null} {...data} /> : <></>}
+                {data ? (
+                  <Post ip={ip} {...data} />
+                ) : (
+                  <>
+                    <div className="h-[517px] animate-pulse rounded bg-neutral-800 md:mb-10" />
+                    <div className="flex gap-4 md:m-10 md:gap-5">
+                      <div className="h-12 w-12 animate-pulse rounded bg-neutral-800 md:h-20 md:w-20" />
+                    </div>
+                  </>
+                )}
               </Dialog.Panel>
             </div>
           </div>

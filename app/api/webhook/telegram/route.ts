@@ -1,7 +1,6 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import TelegramBot from 'node-telegram-bot-api'
+import { supabase } from 'services'
 
 export async function POST(req: Request) {
   const bot = new TelegramBot(process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN, {
@@ -9,7 +8,6 @@ export async function POST(req: Request) {
   })
   bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id
-    const supabase = createRouteHandlerClient<Database>({ cookies })
     try {
       const { data } = await supabase
         .from('connections')

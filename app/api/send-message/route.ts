@@ -1,12 +1,10 @@
 import { Client } from '@notionhq/client'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import TelegramBot from 'node-telegram-bot-api'
+import { supabase } from 'services'
 
 export async function POST(req: Request) {
   const { id } = await req.json()
-  const supabase = createRouteHandlerClient<Database>({ cookies })
 
   const [{ data }, { data: users }] = await Promise.all([
     supabase.from('reserves').select('*').eq('id', id).single(),

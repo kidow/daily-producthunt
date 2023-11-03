@@ -1,6 +1,5 @@
 'use client'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Pagination } from 'components'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
@@ -8,7 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from 'next/link'
 import { useState } from 'react'
 import type { FC, FormEvent } from 'react'
-import { backdrop } from 'services'
+import { backdrop, supabase } from 'services'
 
 dayjs.extend(relativeTime)
 
@@ -24,7 +23,6 @@ const Products: FC<Props> = (props) => {
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(props.total || 0)
   const [search, setSearch] = useState<string>('')
-  const supabase = createClientComponentClient<Database>()
 
   const get = async (page: number = 1) => {
     backdrop.open()

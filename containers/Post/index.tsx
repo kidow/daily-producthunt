@@ -1,11 +1,10 @@
 'use client'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import mediumZoom from 'medium-zoom'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
-import { cn, useObjectState } from 'services'
+import { cn, supabase, useObjectState } from 'services'
 
 type Post = Table.History & { likes: string[] }
 interface Props extends Post {
@@ -36,7 +35,6 @@ export default function Post({
     likes: props.likes || [],
     isAnimated: false
   })
-  const supabase = createClientComponentClient<Database>()
   const params = useParams()
 
   async function handleLike() {
@@ -97,8 +95,10 @@ export default function Post({
   )
 
   useEffect(() => {
-    mediumZoom('[data-zoomable]', { background: 'rgba(0,0,0,0.5)' })
-  }, [])
+    if (cover_url) {
+      mediumZoom('[data-zoomable]', { background: 'rgba(0,0,0,0.5)' })
+    }
+  }, [cover_url])
   return (
     <>
       <img

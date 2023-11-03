@@ -1,12 +1,10 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { supabase } from 'services'
 
 import Products from './products'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
-  const supabase = createServerComponentClient<Database>({ cookies })
   const { data, count } = await supabase
     .from('histories')
     .select('*', { count: 'exact' })

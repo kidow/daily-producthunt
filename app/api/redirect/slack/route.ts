@@ -1,7 +1,6 @@
 import { WebClient } from '@slack/web-api'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { supabase } from 'services'
 
 export async function GET(req: Request) {
   const web = new WebClient(process.env.NEXT_PUBLIC_SLACK_TOKEN)
@@ -20,7 +19,6 @@ export async function GET(req: Request) {
     redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/redirect/slack`
   })
 
-  const supabase = createRouteHandlerClient<Database>({ cookies })
   const { error } = await supabase
     .from('connections')
     .insert({ slack_webhook_url: incoming_webhook?.url })

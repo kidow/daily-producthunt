@@ -1,6 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { supabase } from 'services'
 
 export async function POST(req: Request) {
   const { webhookUrl } = await req.json()
@@ -9,7 +8,6 @@ export async function POST(req: Request) {
       success: false,
       message: 'URL이 전달되지 않았습니다.'
     })
-  const supabase = createRouteHandlerClient<Database>({ cookies })
   const { data } = await supabase
     .from('connections')
     .select('discord_webhook_url')
