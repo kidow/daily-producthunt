@@ -22,17 +22,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .eq('id', params.id)
     .single()
   return {
-    title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
+    title: `${data?.name} - ${data?.title}`,
     description: data?.intro,
     keywords: `producthunt, ${data?.tags.join(', ')}`,
     openGraph: {
-      title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
+      title: `${data?.name} - ${data?.title}`,
       description: data?.intro,
       url: data?.url
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${data?.name} - ${data?.title} | 일간 ProductHunt`,
+      title: `${data?.name} - ${data?.title}`,
       description: data?.intro
     },
     metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL)
