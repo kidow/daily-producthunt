@@ -3,9 +3,24 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import TelegramBot from 'node-telegram-bot-api'
+import nodemailer from 'nodemailer'
+import { z } from 'zod'
 
 export async function POST(req: Request) {
-  const { id } = await req.json()
+  const body = await req.json()
+  const schema = z.object({
+    id: z.number(),
+    html: z.string()
+  })
+  const result = schema.safeParse(body)
+  if (!result.success) {
+    return NextResponse.json({
+      success: false,
+      message: '데이터가 유효하지 않습니다.',
+      error: result.error
+    })
+  }
+  const { id, html } = result.data
   const supabase = createServerComponentClient<Database>({ cookies })
 
   const [{ data }, { data: users }] = await Promise.all([
@@ -16,6 +31,14 @@ export async function POST(req: Request) {
   if (!data) {
     return NextResponse.json({ success: false, message: '데이터가 없습니다.' })
   }
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'wcgo2ling@gmail.com',
+      pass: process.env.APP_PASSWORD
+    }
+  })
 
   try {
     if (users) {
@@ -244,6 +267,12 @@ export async function POST(req: Request) {
               new URL(data.url).host
             }</p>\n</div>\n</a></figure>\n<figure id=\"og_1687252745800\" contenteditable=\"false\" data-ke-type=\"opengraph\" data-ke-align=\"alignCenter\" data-og-type=\"website\" data-og-title=\"일간 ProductHunt\" data-og-description=\"일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커\" data-og-host=\"slashpage.com\" data-og-source-url=\"https://slashpage.com/daily-producthunt\" data-og-url=\"https://slashpage.com/daily-producthunt\" data-og-image=\"https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512\"><a href=\"https://slashpage.com/daily-producthunt\" target=\"_blank\" rel=\"noopener\" data-source-url=\"https://slashpage.com/daily-producthunt\">\n<div class=\"og-image\" style=\"background-image: url('https://scrap.kakaocdn.net/dn/6g056/hyS2xRSxbO/gxT6rt6y5pWTeT3V7bFkj0/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512,https://scrap.kakaocdn.net/dn/W8hKM/hyS4pLqVGi/YQVketpQssqDqN4beZrmYk/img.jpg?width=512&amp;height=512&amp;face=0_0_512_512');\">&nbsp;</div>\n<div class=\"og-text\">\n<p class=\"og-title\" data-ke-size=\"size16\">일간 ProductHunt</p>\n<p class=\"og-desc\" data-ke-size=\"size16\">일간 ProductHunt는 ProductHunt에 올라오는 상위 5개 제품을 요약해서 슬랙, 디스코드를 통해 메시지를 전달하고 노션을 통해 전송 내역을 저장해줍니다. ProductHunt는 전 세계 450만 명 이상의 IT 메이커</p>\n<p class=\"og-host\" data-ke-size=\"size16\">slashpage.com</p>\n</div>\n</a></figure>`
           })
+        }),
+        transporter.sendMail({
+          from: 'wcgo2ling@gmail.com',
+          to: 'wcgo2ling@gmail.com',
+          subject: data.title,
+          html
         })
       ])
       console.log('result', result)

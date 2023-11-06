@@ -5,6 +5,7 @@ import {
   PlusIcon,
   TrashIcon
 } from '@heroicons/react/24/outline'
+import { renderAsync } from '@react-email/render'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import {
   Button,
@@ -20,6 +21,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { backdrop, isURL, toast } from 'services'
+import Newsletter from 'templates/emails/newsletter'
 
 interface State {
   url: string
@@ -112,14 +114,22 @@ export default function Page() {
     getList()
   }
 
-  const sendMessage = async (id: number) => {
+  const sendMessage = async (item: Table.Reserve) => {
     if (!window.confirm('전송하시겠습니까?')) return
     backdrop.open()
     try {
+      const html = await renderAsync(
+        <Newsletter
+          title={item.title}
+          name={item.name}
+          intro={item.intro}
+          url={item.url}
+        />
+      )
       const res = await fetch('/api/send-message', {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id: item.id, html }),
         cache: 'no-cache'
       })
       const { success, message, data } = await res.json()
@@ -194,7 +204,7 @@ export default function Page() {
                 </td>
                 <td>
                   <div className="flex items-center justify-center gap-2">
-                    <IconButton onClick={() => sendMessage(item.id)}>
+                    <IconButton onClick={() => sendMessage(item)}>
                       <PaperAirplaneIcon />
                     </IconButton>
                     <IconButton onClick={() => removeReserve(item.id)}>

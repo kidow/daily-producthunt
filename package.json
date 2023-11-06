@@ -6,12 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "email": "email dev"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@notionhq/client": "^2.2.5",
+    "@react-email/button": "0.0.11",
+    "@react-email/components": "0.0.11",
+    "@react-email/html": "0.0.6",
+    "@react-email/render": "^0.0.9",
     "@slack/web-api": "^6.8.1",
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@supabase/supabase-js": "^2.26.0",
@@ -24,16 +29,19 @@
     "medium-zoom": "^1.0.8",
     "next": "13.5.2",
     "node-telegram-bot-api": "^0.61.0",
+    "nodemailer": "^6.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-email": "^1.9.5",
     "react-hook-form": "^7.45.0-next.1",
-    "resend": "^1.1.0",
-    "schema-dts": "^1.1.2"
+    "schema-dts": "^1.1.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/node": "^20.3.1",
     "@types/node-telegram-bot-api": "^0.61.6",
+    "@types/nodemailer": "^6.4.13",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "autoprefixer": "^10.4.14",

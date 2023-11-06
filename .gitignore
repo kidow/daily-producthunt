@@ -36,3 +36,7 @@ next-env.d.ts
 
 # Sentry Auth Token
 .sentryclirc
+
+# Email
+.react-email
+templates/node_modules

@@ -28,6 +28,6 @@ declare namespace NodeJS {
 
     NEXT_PUBLIC_SENTRY_DSN: string
 
-    RESEND_API_KEY: string
+    APP_PASSWORD: string
   }
 }
