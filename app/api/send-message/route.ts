@@ -160,7 +160,7 @@ export async function POST(req: Request) {
                       url: data.icon_url
                     },
                     title: `${data.name} - ${data.title}`,
-                    url: `https://daily-produchunt.kidow.me/l?id=${page?.id}`
+                    url: `https://daily-producthunt.kidow.me/l?id=${page?.id}`
                   }
                 ]
               })
