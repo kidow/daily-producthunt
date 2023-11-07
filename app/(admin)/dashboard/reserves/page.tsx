@@ -120,10 +120,11 @@ export default function Page() {
     try {
       const html = await renderAsync(
         <Newsletter
+          id={item.id}
           title={item.title}
           name={item.name}
           intro={item.intro}
-          url={item.url}
+          coverUrl={item.cover_url}
         />
       )
       const res = await fetch('/api/send-message', {

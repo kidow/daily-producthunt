@@ -271,11 +271,10 @@ export async function POST(req: Request) {
         transporter.sendMail({
           from: 'wcgo2ling@gmail.com',
           to: 'wcgo2ling@gmail.com',
-          subject: data.title,
+          subject: data.name,
           html
         })
       ])
-      console.log('result', result)
       return NextResponse.json({ success: true, data: result })
     }
 
