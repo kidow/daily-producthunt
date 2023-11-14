@@ -24,6 +24,9 @@ export default function RootLayout({ children, modal }: Props) {
         >
           개인정보처리방침
         </Link>
+        <Link href="https://github.com/kidow/daily-producthunt" target="_blank">
+          Github
+        </Link>
       </footer>
       {modal}
     </>

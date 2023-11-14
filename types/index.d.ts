@@ -66,6 +66,7 @@ interface Database {
           discord_webhook_url: string | null
           telegram_chatting_id: number | null
           jandi_webhook_url: string | null
+          email: string | null
         }
         Insert: {
           id?: number
@@ -76,6 +77,7 @@ interface Database {
           discord_webhook_url?: string | null
           telegram_chatting_id?: number | null
           jandi_webhook_url?: string | null
+          email?: string | null
         }
         Update: {
           id?: number
@@ -86,6 +88,7 @@ interface Database {
           discord_webhook_url?: string | null
           telegram_chatting_id?: number | null
           jandi_webhook_url?: string | null
+          email?: string | null
         }
       }
       reserves: {
