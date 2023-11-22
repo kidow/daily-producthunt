@@ -6,7 +6,7 @@ interface Props extends ReactProps {
   modal: ReactNode
 }
 
-export default function RootLayout({ children, modal }: Props) {
+export default function Layout({ children, modal }: Props) {
   return (
     <>
       <Header />

@@ -1,6 +1,7 @@
 'use client'
 
 import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/20/solid'
 import { Post } from 'containers'
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect } from 'react'
@@ -78,6 +79,19 @@ export default function Page({ params }: Props): JSX.Element {
               </Dialog.Panel>
             </div>
           </div>
+        </Transition.Child>
+        <Transition.Child
+          as={Fragment}
+          enter="transition duration-200 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-100 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
+        >
+          <button className="hidden fixed top-4 right-8 h-10 w-10 rounded-xl bg-neutral-100 md:inline-flex items-center justify-center">
+            <XMarkIcon className="h-6 w-6 text-neutral-900" />
+          </button>
         </Transition.Child>
       </Dialog>
     </Transition>
