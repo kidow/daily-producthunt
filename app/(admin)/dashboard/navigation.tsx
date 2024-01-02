@@ -1,18 +1,33 @@
 'use client'
 
 import { Bars3Icon } from '@heroicons/react/24/solid'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { memo, useMemo, useState } from 'react'
 import type { FC } from 'react'
-import { cn } from 'services'
+import { backdrop, cn, toast } from 'services'
 
 export interface Props {}
 interface State {}
 
 const Navigation: FC<Props> = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const supabase = createClientComponentClient<Database>()
   const pathname = usePathname()
+  const { push } = useRouter()
+
+  const signOut = async () => {
+    if (!window.confirm('로그아웃하시겠습니까?')) return
+    backdrop.open()
+    const { error } = await supabase.auth.signOut()
+    backdrop.close()
+    if (error) {
+      toast.error('로그아웃 에러')
+      console.error(error)
+    }
+    push(`/login?redirectUrl=${pathname}`)
+  }
 
   const list: Array<{ href: string; name: string }> = useMemo(
     () => [
@@ -31,8 +46,8 @@ const Navigation: FC<Props> = () => {
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
       >
-        <nav className="h-full bg-black p-4">
-          <ul>
+        <nav className="h-full bg-black p-4 flex flex-col">
+          <ul className="flex-1">
             {list.map((item, key) => (
               <li key={key}>
                 <Link
@@ -47,6 +62,12 @@ const Navigation: FC<Props> = () => {
               </li>
             ))}
           </ul>
+          <button
+            onClick={signOut}
+            className="block rounded-lg px-4 py-1.5 font-semibold duration-150 hover:bg-neutral-800"
+          >
+            Sign Out
+          </button>
         </nav>
       </aside>
       <button

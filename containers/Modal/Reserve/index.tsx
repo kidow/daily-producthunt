@@ -123,6 +123,7 @@ const ReserveModal: FC<Props> = ({
             <Tag
               key={i}
               tagList={tagList}
+              onRemove={() => setTags(tags.filter((_, key) => key !== i))}
               value={tag}
               onChange={(name) =>
                 setTags([...tags.slice(0, i), name, ...tags.slice(i + 1)])

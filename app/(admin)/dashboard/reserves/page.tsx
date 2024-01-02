@@ -38,19 +38,18 @@ interface State {
 export default function Page() {
   const { register, handleSubmit, watch, setValue } = useForm<State>({
     defaultValues: {
-      url: 'https://google.com',
-      name: '이름',
-      iconUrl:
-        'https://ph-files.imgix.net/018c7fa4-9fb2-4094-a471-68b27efaef12.gif',
-      coverUrl: 'https://i.imgur.com/reSQtNL.png',
-      title: '타이틀',
-      intro: '한 줄 소개',
-      core: '핵심 기능',
-      platform: '지원 플랫폼',
-      pricing: '가격 정책'
+      url: '',
+      name: '',
+      iconUrl: '',
+      coverUrl: '',
+      title: '',
+      intro: '',
+      core: '',
+      platform: '',
+      pricing: ''
     }
   })
-  const [tags, setTags] = useState<string[]>(['Tag 1'])
+  const [tags, setTags] = useState<string[]>([])
   const [reserveList, setReserveList] = useState<Table.Reserve[]>([])
   const [isAddTagOpen, setIsAddTagOpen] = useState<boolean>(false)
   const [tagList, setTagList] = useState<Table.Tag[]>([])
@@ -60,10 +59,13 @@ export default function Page() {
   const supabase = createClientComponentClient<Database>()
 
   const getList = async () => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('reserves')
       .select('*')
       .order('created_at', { ascending: true })
+    if (error) {
+      console.error(error)
+    }
     setReserveList(data || [])
   }
 
@@ -303,6 +305,7 @@ export default function Page() {
               {tags.map((tag, i) => (
                 <Tag
                   key={i}
+                  onRemove={() => setTags(tags.filter((_, key) => key !== i))}
                   tagList={tagList}
                   value={tag}
                   onChange={(name) =>

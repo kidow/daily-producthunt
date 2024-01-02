@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/l'
+      disallow: ['/l', '/dashboard', '/login', '/connect']
     },
     sitemap: 'https://daily-producthunt.kidow.me/sitemap.xml'
   }

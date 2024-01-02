@@ -14,6 +14,7 @@ export interface Props {
   fullWidth?: boolean
   float?: boolean
   className?: string
+  autoFocus?: boolean
 }
 interface State {}
 
@@ -25,7 +26,8 @@ const Input: FC<Props> = ({
   placeholder,
   fullWidth,
   float,
-  className
+  className,
+  autoFocus
 }) => {
   const id = useId()
   return (
@@ -43,6 +45,7 @@ const Input: FC<Props> = ({
           })}
           id={id}
           type={type}
+          autoFocus={autoFocus}
           required={required}
           autoComplete="off"
           placeholder={placeholder}

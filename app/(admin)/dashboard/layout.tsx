@@ -1,11 +1,4 @@
-import type { Metadata } from 'next'
-
 import Navigation from './navigation'
-
-export const metadata: Metadata = {
-  title: '대시보드',
-  robots: 'noindex, nofollow'
-}
 
 export default function Layout({ children }: ReactProps) {
   return (
