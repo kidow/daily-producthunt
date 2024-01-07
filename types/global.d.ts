@@ -29,5 +29,6 @@ declare namespace NodeJS {
     NEXT_PUBLIC_SENTRY_DSN: string
 
     APP_PASSWORD: string
+    CRON_SECRET: string
   }
 }
