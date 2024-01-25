@@ -20,12 +20,12 @@ interface State {}
 
 const Input: FC<Props> = ({
   required,
-  type,
+  type = 'text',
   suffix,
   register,
   placeholder,
   fullWidth,
-  float,
+  float = true,
   className,
   autoFocus
 }) => {
@@ -58,11 +58,6 @@ const Input: FC<Props> = ({
       </div>
     </div>
   )
-}
-
-Input.defaultProps = {
-  type: 'text',
-  float: true
 }
 
 export default Input

@@ -26,8 +26,8 @@ const nextConfig = {
   },
   async headers() {
     return [
-      { source: '/api/post', headers }
-      // { source: '/api/send-message', headers }
+      { source: '/api/post', headers },
+      { source: '/api/send-message', headers }
     ]
   }
 }
