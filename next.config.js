@@ -2,7 +2,7 @@ const headers = [
   { key: 'Access-Control-Allow-Credentials', value: 'true' },
   {
     key: 'Access-Control-Allow-Origin',
-    value: 'https://daily-producthunt.kidow.me'
+    value: 'https://daily-producthunt.dongwook.kim'
   },
   {
     key: 'Access-Control-Allow-Methods',

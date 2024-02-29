@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/l', '/dashboard', '/login', '/connect']
     },
-    sitemap: 'https://daily-producthunt.kidow.me/sitemap.xml'
+    sitemap: 'https://daily-producthunt.dongwook.kim/sitemap.xml'
   }
 }

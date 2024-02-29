@@ -12,7 +12,7 @@ module.exports = {
         '2xs': ['10px', '1.25']
       },
       colors: {
-        primary: '#da552f'
+        primary: '#FF6154'
       },
       keyframes: {
         'toast-open': {

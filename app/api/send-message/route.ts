@@ -72,7 +72,7 @@ export async function POST(req: Request) {
                     type: 'section',
                     text: {
                       type: 'mrkdwn',
-                      text: `*<https://daily-producthunt.kidow.me/l?id=${page?.id}|${data.name} - ${data.title}>*`
+                      text: `*<https://daily-producthunt.dongwook.kim/l?id=${page?.id}|${data.name} - ${data.title}>*`
                     }
                   },
                   {
@@ -182,7 +182,7 @@ export async function POST(req: Request) {
                       url: data.icon_url
                     },
                     title: `${data.name} - ${data.title}`,
-                    url: `https://daily-producthunt.kidow.me/l?id=${page?.id}`
+                    url: `https://daily-producthunt.dongwook.kim/l?id=${page?.id}`
                   }
                 ]
               })
@@ -195,7 +195,7 @@ export async function POST(req: Request) {
             )
             return bot.sendMessage(
               item.telegram_chatting_id!,
-              `**[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${page?.id})**\n- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`,
+              `**[${data.name} - ${data.title}](https://daily-producthunt.dongwook.kim/l?id=${page?.id})**\n- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`,
               { parse_mode: 'Markdown' }
             )
           }
@@ -208,10 +208,10 @@ export async function POST(req: Request) {
               }),
               body: JSON.stringify({
                 body: `**[일간 ProductHunt]** ${data.name} - ${data.title}`,
-                connectColor: '#da552f',
+                connectColor: '#FF6154',
                 connectInfo: [
                   {
-                    title: `[${data.name} - ${data.title}](https://daily-producthunt.kidow.me/l?id=${page?.id})`,
+                    title: `[${data.name} - ${data.title}](https://daily-producthunt.dongwook.kim/l?id=${page?.id})`,
                     description: `- ${data.intro}\n- ${data.core}\n- ${data.platform}\n- ${data.pricing}`
                   }
                 ]

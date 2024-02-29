@@ -15,7 +15,7 @@ export function generateMetadata(): Metadata {
     applicationName: title,
     generator: 'Next.js',
     keywords: ['nextjs', 'producthunt', 'vercel', 'tailwindcss', 'typescript'],
-    themeColor: '#da552f',
+    themeColor: '#FF6154',
     creator: 'kidow',
     publisher: 'Vercel',
     robots: 'index, follow',
@@ -34,9 +34,9 @@ export function generateMetadata(): Metadata {
       card: 'summary_large_image'
     },
     verification: {
-      google: 'dpMF3-oHfMYFVkjgJpIJSGM_W_aL_gSFFnmWHM90NHU',
+      google: 'iOZSvTkUwxiTVHLqRigAXocT03NlO-xG1ZbAzbVwYC4',
       other: {
-        'naver-site-verification': 'f9be48b5bf4739e1027a3d4405d983a439c4a6e1'
+        'naver-site-verification': 'ce1d027ada07aaee74e83540121ce08c9e04fb14'
       }
     },
     category: 'Media',

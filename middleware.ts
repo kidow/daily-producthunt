@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith('/api/post')) {
     res.headers.set(
       'Access-Control-Allow-Origin',
-      'https://daily-producthunt.kidow.me'
+      'https://daily-producthunt.dongwook.kim'
     )
   }
 
