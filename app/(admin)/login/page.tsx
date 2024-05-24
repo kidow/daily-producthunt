@@ -5,7 +5,7 @@ import { Input } from 'components'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { backdrop, toast } from 'services'
+import { backdrop, toast, useUsermaven } from 'services'
 
 interface State {
   email: string
@@ -22,6 +22,7 @@ export default function Page() {
   const supabase = createClientComponentClient<Database>()
   const { push } = useRouter()
   const searchParams = useSearchParams()
+  const usermaven = useUsermaven()
 
   const onSubmit = async (form: State) => {
     if (form.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) return
@@ -36,6 +37,7 @@ export default function Page() {
       console.error(error)
       return
     }
+    usermaven.track('signed_up', { method: 'email' })
     push('/dashboard')
   }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { usermavenClient } from '@usermaven/sdk-js'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
 
@@ -111,4 +112,13 @@ export function useObjectState<T>(
   }, [state])
 
   return [state, onChange, onEventChange, resetState]
+}
+
+export function useUsermaven() {
+  const usermaven = usermavenClient({
+    key: process.env.NEXT_PUBLIC_USERMAVEN_API_KEY,
+    tracking_host: 'https://events.usermaven.com'
+  })
+
+  return usermaven
 }

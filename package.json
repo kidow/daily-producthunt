@@ -20,7 +20,6 @@
     "@slack/web-api": "^6.8.1",
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@supabase/supabase-js": "^2.26.0",
-    "@usermaven/nextjs": "^1.4.0",
     "@usermaven/sdk-js": "^1.4.0",
     "@vercel/og": "^0.5.7",
     "clsx": "^2.0.0",
