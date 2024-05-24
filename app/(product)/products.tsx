@@ -1,6 +1,5 @@
 'use client'
 
-import { useUsermaven } from '@usermaven/nextjs'
 import { Pagination } from 'components'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
@@ -24,7 +23,6 @@ const Products: FC<Props> = (props) => {
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(props.total || 0)
   const [search, setSearch] = useState<string>('')
-  const usermaven = useUsermaven()
 
   const get = async (page: number = 1) => {
     backdrop.open()
@@ -102,29 +100,6 @@ const Products: FC<Props> = (props) => {
               className="group flex gap-4"
               href={`/product/${item.id}`}
               scroll={false}
-              onClick={() => {
-                usermaven.id({
-                  id: 'lzL24K3kYw',
-                  email: 'user@domain.com',
-                  created_at: '2021-01-20T09:55:35',
-                  first_name: 'John',
-                  last_name: 'Smith',
-                  custom: {
-                    plan_name: 'premium'
-                  },
-                  company: {
-                    id: 'uPq9oUGrIt',
-                    name: 'Usermaven',
-                    created_at: '2021-01-20T09:55:35', //
-                    custom: {
-                      plan: 'enterprise',
-                      industry: 'Technology',
-                      website: 'https://usermaven.com',
-                      employees: 20
-                    }
-                  }
-                })
-              }}
             >
               <img
                 src={item.icon_url}

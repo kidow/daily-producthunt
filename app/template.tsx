@@ -4,15 +4,13 @@ import { UsermavenClient, usermavenClient } from '@usermaven/sdk-js'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
-interface Props extends ReactProps {}
-
-function Usermaven({ children }: Props): JSX.Element {
+export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   useEffect(() => {
     const usermaven: UsermavenClient = usermavenClient({
-      key: 'UMKhByWwEs',
+      key: process.env.NEXT_PUBLIC_USERMAVEN_API_KEY,
       tracking_host: 'https://events.usermaven.com'
     })
 
@@ -20,5 +18,3 @@ function Usermaven({ children }: Props): JSX.Element {
   }, [pathname, searchParams])
   return <>{children}</>
 }
-
-export default Usermaven

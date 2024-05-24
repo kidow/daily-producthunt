@@ -30,5 +30,6 @@ declare namespace NodeJS {
 
     APP_PASSWORD: string
     CRON_SECRET: string
+    NEXT_PUBLIC_USERMAVEN_API_KEY: string
   }
 }
