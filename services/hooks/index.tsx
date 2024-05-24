@@ -61,7 +61,7 @@ export const usePagination = ({
 }
 
 export function useObjectState<T>(
-  initialObject: T
+  initialState: T
 ): [
   T,
   (obj: Partial<T>, callback?: (state: T) => void) => void,
@@ -70,7 +70,7 @@ export function useObjectState<T>(
   ) => void,
   (keys?: Array<keyof T>) => void
 ] {
-  const [state, setState] = useState<T>(initialObject)
+  const [state, setState] = useState<T>(initialState)
   const callbackRef = useRef<(state: T) => void>()
   const isFirstCallbackCall = useRef<boolean>(true)
 
@@ -92,15 +92,15 @@ export function useObjectState<T>(
   )
 
   const arrayToObject = (keys: Array<keyof T>): T => {
-    if (!keys.length) return initialObject
+    if (!keys.length) return initialState
     const initial: any = {}
-    keys.reduce((acc, cur) => (initial[cur] = initialObject[cur]), initial)
+    keys.reduce((acc, cur) => (initial[cur] = initialState[cur]), initial)
     return initial
   }
   const resetState = (keys?: Array<keyof T>) =>
     keys
       ? setState((prevState) => ({ ...prevState, ...arrayToObject(keys) }))
-      : setState(initialObject)
+      : setState(initialState)
 
   useEffect(() => {
     if (isFirstCallbackCall.current) {
