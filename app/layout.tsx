@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 
 import './globals.css'
+import Usermaven from './usermaven'
 
 export interface Props extends ReactProps {}
 
@@ -59,7 +60,7 @@ export default function RootLayout({ children }: Props) {
             })(window,document,'script','dataLayer','GTM-WVMQ8J6T');`
           }}
         />
-        {children}
+        <Usermaven>{children}</Usermaven>
         <Backdrop />
         <Toast />
       </body>
